@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "apps.common.services.pgadmin",
 ]
 
 MIDDLEWARE = [
@@ -75,8 +76,12 @@ WSGI_APPLICATION = "techsystem.wsgi.application"
 
 DATABASES = {
     "default": {
-        "  ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": "localhost",
+        "PORT": 5432,
+        "NAME": "TechSystem",
+        "USER": "postgres",
+        "PASSWORD": "admin",
     }
 }
 
