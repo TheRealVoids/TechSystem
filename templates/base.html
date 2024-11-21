@@ -17,7 +17,26 @@
   </head>
   <body>
     <header>
-      <h1>Welcome to TechSystem</h1>
+      <h1>TechSystem</h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="{% url 'index' %}">Home</a>
+          </li>
+          <li>
+            <a href="{% url 'authentication:login' %}">Login</a>
+          </li>
+          <li>
+            <a href="{% url 'leases:show_leases' %}">Leases</a>
+          </li>
+          <li>
+            <a href="{% url 'contacts:show_contacts' %}">Contacts</a>
+          </li>
+          <li>
+            <a href="{% url 'contracts:show_contracts' %}">Contracts</a>
+          </li>
+        </ul>
+      </nav>
     </header>
     <main>
       {% block content %}
