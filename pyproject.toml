@@ -5,3 +5,14 @@ line-length = 88
 profile = "black"
 line_length = 88
 known_third_party = ["django", "flask"]
+
+[tool.djlint]
+blank_line_after_tag="load,extends,include"
+blank_line_before_tag="load,extends,include"
+close_void_tags=true
+indent_style="spaces"
+indent_size=2
+max_line_length=88
+no_trailing_whitespace=true
+quote_style="double"
+self_closing_tags="void"
