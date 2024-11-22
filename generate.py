@@ -190,31 +190,40 @@ def populate_database():
 
     print("Inserted Role data...")
 
-    # Insert data into UserAccount
-    user_accounts = [
-        UserAccount(
-            user_id="U1",
-            nit=companies[0],
-            username="john_doe",
-            password_hash="hashed_password_example1",
-            email="jdoe@techinnovations.com",
-        ),
-        UserAccount(
-            user_id="U2",
-            nit=companies[1],
-            username="jane_smith",
-            password_hash="hashed_password_example2",
-            email="jsmith@globalfinances.com",
-        ),
-        UserAccount(
-            user_id="U3",
-            nit=companies[2],
-            username="mary_johnson",
-            password_hash="hashed_password_example3",
-            email="mjohnson@healthsolutions.com",
-        ),
+    user_accounts_data = [
+        {
+            "user_id": "U1",
+            "nit": companies[0],
+            "username": "john_doe",
+            "email": "jdoe@techinnovations.com",
+            "password": "default_password",
+        },
+        {
+            "user_id": "U2",
+            "nit": companies[1],
+            "username": "jane_smith",
+            "email": "jsmith@globalfinances.com",
+            "password": "default_password",
+        },
+        {
+            "user_id": "U3",
+            "nit": companies[2],
+            "username": "mary_johnson",
+            "email": "mjohnson@healthsolutions.com",
+            "password": "default_password",
+        },
     ]
-    UserAccount.objects.bulk_create(user_accounts)
+    user_accounts = []
+    for user_data in user_accounts_data:
+        user = UserAccount.objects.create_user(
+            username=user_data["username"],
+            password=user_data["password"],
+            user_id=user_data["user_id"],
+            nit=user_data["nit"],
+            email=user_data["email"],
+        )
+        user.save()
+        user_accounts.append(user)
 
     print("Inserted UserAccount data...")
 

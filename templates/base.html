@@ -17,24 +17,32 @@
   </head>
   <body>
     <header>
-      <h1>TechSystem</h1>
+      <a href="{% url 'index' %}">
+        <h1>TechSystem</h1>
+      </a>
       <nav>
         <ul>
-          <li>
-            <a href="{% url 'index' %}">Home</a>
-          </li>
-          <li>
-            <a href="{% url 'authentication:login' %}">Login</a>
-          </li>
-          <li>
-            <a href="{% url 'leases:show_leases' %}">Leases</a>
-          </li>
-          <li>
-            <a href="{% url 'contacts:show_contacts' %}">Contacts</a>
-          </li>
-          <li>
-            <a href="{% url 'contracts:show_contracts' %}">Contracts</a>
-          </li>
+          {% if request.user.is_authenticated %}
+            <li>
+              <a href="{% url 'leases:show_leases' %}">Leases</a>
+            </li>
+            <li>
+              <a href="{% url 'contacts:show_contacts' %}">Contacts</a>
+            </li>
+            <li>
+              <a href="{% url 'contracts:show_contracts' %}">Contracts</a>
+            </li>
+            <li>
+              <a href="{% url 'users:show_users' %}">Users</a>
+            </li>
+            <li>
+              <a href="{% url 'authentication:logout' %}">Logout</a>
+            </li>
+          {% else %}
+            <li>
+              <a href="{% url 'authentication:login' %}">Login</a>
+            </li>
+          {% endif %}
         </ul>
       </nav>
     </header>
