@@ -5,4 +5,28 @@
 {% endblock title %}
 {% block content %}
     <h2>Contracts</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Contract ID</th>
+                <th>Company NIT</th>
+                <th>Contract Number</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Monthly Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contract in contracts %}
+                <tr>
+                    <td>{{ contract.contract_id }}</td>
+                    <td>{{ contract.nit.nit }}</td>
+                    <td>{{ contract.contract_number }}</td>
+                    <td>{{ contract.start_date }}</td>
+                    <td>{{ contract.end_date }}</td>
+                    <td>{{ contract.monthly_value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}

@@ -5,4 +5,36 @@
 {% endblock title %}
 {% block content %}
     <h2>Opportunities</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Opportunity ID</th>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Opportunity Name</th>
+                <th>Description</th>
+                <th>Estimated Value</th>
+                <th>Creation Date</th>
+                <th>Estimated Close Date</th>
+                <th>Status</th>
+                <th>Success Probability</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for opportunity in opportunities %}
+                <tr>
+                    <td>{{ opportunity.opportunity_id }}</td>
+                    <td>{{ opportunity.nit.name }}</td>
+                    <td>{{ opportunity.contact_id.first_name }} {{ opportunity.contact_id.last_name }}</td>
+                    <td>{{ opportunity.opportunity_name }}</td>
+                    <td>{{ opportunity.description }}</td>
+                    <td>{{ opportunity.estimated_value }}</td>
+                    <td>{{ opportunity.creation_date }}</td>
+                    <td>{{ opportunity.estimated_close_date }}</td>
+                    <td>{{ opportunity.status }}</td>
+                    <td>{{ opportunity.success_probability }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
