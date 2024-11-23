@@ -86,13 +86,23 @@ WSGI_APPLICATION = "techsystem.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": os.getenv("DB_ENGINE"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-    }
+        "ENGINE": os.getenv("DB_ENGINE_POSTGRES"),
+        "HOST": os.getenv("DB_HOST_POSTGRES"),
+        "PORT": os.getenv("DB_PORT_POSTGRES"),
+        "NAME": os.getenv("DB_NAME_POSTGRES"),
+        "USER": os.getenv("DB_USER_POSTGRES"),
+        "PASSWORD": os.getenv("DB_PASSWORD_POSTGRES"),
+    },
+}
+
+MONGO_CONFIG = {
+    "db": os.getenv("DB_NAME_MONGO"),
+    "host": os.getenv("DB_HOST_MONGO").replace(
+        "<db_password>", os.getenv("DB_PASSWORD_MONGO")
+    ),
+    "username": os.getenv("DB_USER_MONGO"),
+    "password": os.getenv("DB_PASSWORD_MONGO"),
+    "authentication_source": "admin",
 }
 
 
