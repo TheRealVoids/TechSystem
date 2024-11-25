@@ -25,7 +25,7 @@ def show_delivery_certificates(request, contract_id):
 def show_equipments(request, certificate_id):
     certificate = DeliveryCertificate.objects.get(certificate_id=certificate_id)
     equipments = certificate.equipment_set.all()
-    print(certificate.certificate_id)
+    print(equipments.values())
     return render(
         request,
         "layouts/equipments.html",
