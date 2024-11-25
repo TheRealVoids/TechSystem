@@ -1,13 +1,35 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}
     Login
 {% endblock title %}
 {% block content %}
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+    <div class="absolute inset-0 min-h-screen bg-cover bg-center flex items-center justify-center"
+         style="background-image: url('{% static 'images/laptop_at_night_laptop_3.jpg' %}')">
+        <div class="bg-gray-900 bg-opacity-75 p-8 rounded-lg shadow-lg backdrop-filter backdrop-blur-md flex flex-col items-center">
+            <h2 class="text-white text-3xl mb-6 text-center">Login</h2>
+            <form method="post" class="space-y-4 w-full flex flex-col items-center">
+                {% csrf_token %}
+                <div class="w-full">
+                    <label for="{{ form.username.id_for_label }}" class="text-white">
+                        {{ form.username.label }}
+                    </label>
+                    {{ form.username }}
+                </div>
+                <div class="w-full">
+                    <label for="{{ form.password.id_for_label }}" class="text-white">
+                        {{ form.password.label }}
+                    </label>
+                    {{ form.password }}
+                </div>
+                <button type="submit"
+                        class="relative inline-block px-4 py-2 text-white rounded-lg hover:text-faf0e6 backdrop-filter backdrop-blur-md"
+                        style="background: linear-gradient(270deg, rgba(75, 85, 99, 0.5) 0%, rgba(75, 85, 99, 0) 100%)">
+                    Login
+                </button>
+            </form>
+        </div>
+    </div>
 {% endblock content %}
