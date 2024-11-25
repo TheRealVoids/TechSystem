@@ -32,7 +32,7 @@
                     <td>{{ contact.last_interaction_date }}</td>
                     <td>
                         <a href="{% url 'contacts:show_contact_interactions' contact.contact_id %}">Show Interactions</a>
-                        <a href="{% url 'contacts:show_departments' contact.contact_id %}">Show Departments</a>
+                        <a href="{% url 'contacts:show_contact_departments' contact.contact_id %}">Show Departments</a>
                     </td>
                 </tr>
             {% endfor %}

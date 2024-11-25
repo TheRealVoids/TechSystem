@@ -13,7 +13,7 @@ urlpatterns = [
     ),
     path(
         "<str:contact_id>/departments/",
-        views.show_departments,
-        name="show_departments",
+        views.show_contact_departments,
+        name="show_contact_departments",
     ),
 ]

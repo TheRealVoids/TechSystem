@@ -1,7 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from apps.common.services.pgadmin.models import Opportunity, OpportunityStageHistory
+from apps.common.services.pgadmin.models import (
+    Opportunity,
+    OpportunityProductService,
+    OpportunityStageHistory,
+)
 
 
 @login_required
@@ -22,4 +26,15 @@ def show_opportunity_history(request, opportunity_id):
         request,
         "layouts/opportunity_history.html",
         {"opportunity": opportunity, "history": history},
+    )
+
+
+@login_required
+def show_opportunity_services(request, opportunity_id):
+    opportunity = Opportunity.objects.get(opportunity_id=opportunity_id)
+    services = OpportunityProductService.objects.filter(opportunity_id=opportunity_id)
+    return render(
+        request,
+        "layouts/opportunity_services.html",
+        {"opportunity": opportunity, "services": services},
     )

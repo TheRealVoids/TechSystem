@@ -22,7 +22,7 @@ def show_contact_interactions(request, contact_id):
 
 
 @login_required
-def show_departments(request, contact_id):
+def show_contact_departments(request, contact_id):
     contact = Contact.objects.get(contact_id=contact_id)
     departments = contact.contactdepartment_set.all()
     return render(

@@ -36,6 +36,7 @@
                     <td>{{ opportunity.success_probability }}</td>
                     <td>
                         <a href="{% url 'opportunities:show_opportunity_history' opportunity.opportunity_id %}">View History</a>
+                        <a href="{% url 'opportunities:show_opportunity_services' opportunity.opportunity_id %}">View Services</a>
                     </td>
                 </tr>
             {% endfor %}

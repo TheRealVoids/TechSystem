@@ -11,4 +11,9 @@ urlpatterns = [
         views.show_opportunity_history,
         name="show_opportunity_history",
     ),
+    path(
+        "<str:opportunity_id>/services/",
+        views.show_opportunity_services,
+        name="show_opportunity_services",
+    ),
 ]
