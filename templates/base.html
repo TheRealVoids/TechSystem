@@ -19,36 +19,41 @@
   </head>
   <body>
     <header>
-      <a href="{% url 'index' %}">
-        <h1>TechSystem</h1>
-      </a>
       <nav>
-        <ul>
-          {% if request.user.is_authenticated %}
-            <li>
-              <a href="{% url 'leases:show_leases' %}">Leases</a>
-            </li>
-            <li>
-              <a href="{% url 'contacts:show_contacts' %}">Contacts</a>
-            </li>
-            <li>
-              <a href="{% url 'contracts:show_contracts' %}">Contracts</a>
-            </li>
-            <li>
-              <a href="{% url 'users:show_users' %}">Users</a>
-            </li>
-            <li>
-              <a href="{% url 'authentication:logout' %}">Logout</a>
-            </li>
-          {% else %}
-            <li>
-              <a href="{% url 'authentication:login' %}">Login</a>
-            </li>
-          {% endif %}
-        </ul>
+        <nav class="bg-gray-800 p-4">
+          <div class="container mx-auto flex justify-between items-center">
+            <div class="text-white">
+              <a href="{% url 'index' %}" class="text-xl font-bold">TechSystem</a>
+            </div>
+            <ul class="flex space-x-4 text-white">
+              {% if request.user.is_authenticated %}
+                <li>
+                  <a href="{% url 'leases:show_leases' %}" class="hover:text-gray-400">Leases</a>
+                </li>
+                <li>
+                  <a href="{% url 'contacts:show_contacts' %}" class="hover:text-gray-400">Contacts</a>
+                </li>
+                <li>
+                  <a href="{% url 'contracts:show_contracts' %}"
+                     class="hover:text-gray-400">Contracts</a>
+                </li>
+                <li>
+                  <a href="{% url 'users:show_users' %}" class="hover:text-gray-400">Users</a>
+                </li>
+                <li>
+                  <a href="{% url 'authentication:logout' %}" class="hover:text-gray-400">Logout</a>
+                </li>
+              {% else %}
+                <li>
+                  <a href="{% url 'authentication:login' %}" class="hover:text-gray-400">Login</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
       </nav>
     </header>
-    <main>
+    <main class="min-h-screen flex flex-col">
       {% block content %}
       {% endblock content %}
     </main>
