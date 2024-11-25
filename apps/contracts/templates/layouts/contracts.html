@@ -1,32 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Contracts
-{% endblock title %}
+{% block title %}Contracts{% endblock title %}
+
 {% block content %}
-    <h2>Contracts</h2>
-    <table>
+<div class="container mx-auto mt-8">
+    <h2 class="text-2xl font-bold mb-6">Contracts</h2>
+    <a href="/contracts/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-6 inline-block">Add New Contract</a>
+    <table class="min-w-full bg-white border border-gray-300">
         <thead>
-            <tr>
-                <th>Contract ID</th>
-                <th>Company NIT</th>
-                <th>Contract Number</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Monthly Value</th>
+            <tr class="bg-gray-200">
+                <th class="px-4 py-2 border">Contract ID</th>
+                <th class="px-4 py-2 border">Contract Number</th>
+                <th class="px-4 py-2 border">Company NIT</th>
+                <th class="px-4 py-2 border">Monthly Value</th>
+                <th class="px-4 py-2 border">Start Date</th>
+                <th class="px-4 py-2 border">End Date</th>
+                <th class="px-4 py-2 border">Status</th>
             </tr>
         </thead>
         <tbody>
             {% for contract in contracts %}
-                <tr>
-                    <td>{{ contract.contract_id }}</td>
-                    <td>{{ contract.nit.nit }}</td>
-                    <td>{{ contract.contract_number }}</td>
-                    <td>{{ contract.start_date }}</td>
-                    <td>{{ contract.end_date }}</td>
-                    <td>{{ contract.monthly_value }}</td>
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2 border">{{ contract.contract_id }}</td>
+                    <td class="px-4 py-2 border">{{ contract.contract_number }}</td>
+                    <td class="px-4 py-2 border">{{ contract.nit_id }}</td>
+                    <td class="px-4 py-2 border">{{ contract.monthly_value }}</td>
+                    <td class="px-4 py-2 border">{{ contract.start_date }}</td>
+                    <td class="px-4 py-2 border">{{ contract.end_date }}</td>
+                    <td class="px-4 py-2 border">
+                        <span class="px-2 py-1 rounded {{ contract.status.class }}">
+                            {{ contract.status.label }}
+                        </span>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+</div>
 {% endblock content %}
