@@ -16,49 +16,49 @@
     {% compress css %}
       <link rel="stylesheet" href="{% static 'src/output.css' %}" />
     {% endcompress %}
+    <style>
+      body {
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+    </style>
   </head>
-  <body>
-    <header>
-      <nav>
-        <nav class="bg-gray-800 p-4">
-          <div class="container mx-auto flex justify-between items-center">
-            <div class="text-white">
-              <a href="{% url 'index' %}" class="text-xl font-bold">TechSystem</a>
-            </div>
-            <ul class="flex space-x-4 text-white">
-              {% if request.user.is_authenticated %}
-                <li>
-                  <a href="{% url 'leases:show_leases' %}" class="hover:text-gray-400">Leases</a>
-                </li>
-                <li>
-                  <a href="{% url 'contacts:show_contacts' %}" class="hover:text-gray-400">Contacts</a>
-                </li>
-                <li>
-                  <a href="{% url 'contracts:show_contracts' %}"
-                     class="hover:text-gray-400">Contracts</a>
-                </li>
-                <li>
-                  <a href="{% url 'users:show_users' %}" class="hover:text-gray-400">Users</a>
-                </li>
-                <li>
-                  <a href="{% url 'authentication:logout' %}" class="hover:text-gray-400">Logout</a>
-                </li>
-              {% else %}
-                <li>
-                  <a href="{% url 'authentication:login' %}" class="hover:text-gray-400">Login</a>
-                </li>
-              {% endif %}
-            </ul>
+  <body class="min-h-screen flex flex-col bg-faf0e6 text-352f44">
+    <header class="bg-352f44 text-b9b4c7 shadow-md">
+      <nav class="p-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <div class="text-b9b4c7 hover:text-faf0e6">
+            <a href="{% url 'index' %}" class="text-2xl font-bold">TechSystem</a>
           </div>
-        </nav>
+          <ul class="flex space-x-4">
+            {% if request.user.is_authenticated %}
+              <li>
+                <a href="{% url 'leases:show_leases' %}" class="hover:text-faf0e6">Leases</a>
+              </li>
+              <li>
+                <a href="{% url 'contacts:show_contacts' %}" class="hover:text-faf0e6">Contacts</a>
+              </li>
+              <li>
+                <a href="{% url 'contracts:show_contracts' %}" class="hover:text-faf0e6">Contracts</a>
+              </li>
+              <li>
+                <a href="{% url 'users:show_users' %}" class="hover:text-faf0e6">Users</a>
+              </li>
+              <li>
+                <a href="{% url 'authentication:logout' %}" class="hover:text-faf0e6">Logout</a>
+              </li>
+            {% else %}
+              <li>
+                <a href="{% url 'authentication:login' %}" class="hover:text-faf0e6">Login</a>
+                <i class="fi fi-rr-user pl-2"></i>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
       </nav>
     </header>
-    <main class="min-h-screen flex flex-col">
+    <main class="flex-grow container mx-auto">
       {% block content %}
       {% endblock content %}
     </main>
-    <footer>
-      <p>2024 TechSystem. All rights reserved.</p>
-    </footer>
   </body>
 </html>
