@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Contact Interactions
+{% endblock title %}
+{% block content %}
+    <h2>Contact Interactions for {{ contact.first_name }} {{ contact.last_name }}</h2>
+    <a href="{% url 'contacts:show_contacts' %}">Back to Contacts</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Interaction ID</th>
+                <th>Interaction Date</th>
+                <th>Interaction Type</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for interaction in interactions %}
+                <tr>
+                    <td>{{ interaction.interaction_id }}</td>
+                    <td>{{ interaction.interaction_date }}</td>
+                    <td>{{ interaction.interaction_type }}</td>
+                    <td>{{ interaction.notes }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

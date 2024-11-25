@@ -7,6 +7,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "techsystem.settings")
 django.setup()
 
 from apps.common.services.pgadmin.models import (
+    Category,
     Company,
     Contact,
     ContactDepartment,
@@ -14,6 +15,7 @@ from apps.common.services.pgadmin.models import (
     DeliveryCertificate,
     Department,
     Equipment,
+    Interaction,
     Opportunity,
     OpportunityProductService,
     OpportunityStage,
@@ -43,6 +45,8 @@ def reset_database():
         Department,
         Contact,
         Company,
+        Interaction,
+        Category,
     ]
     for model in models:
         model.objects.all().delete()
@@ -128,6 +132,76 @@ def populate_database():
     Contact.objects.bulk_create(contacts)
 
     print("Inserted Contact data...")
+
+    # Insert data into Interaction
+    interactions = [
+        Interaction(
+            interaction_id="I1",
+            contact_id=contacts[0],
+            interaction_date="2024-10-01",
+            interaction_type="Email",
+            notes="Discussed project requirements and timeline.",
+        ),
+        Interaction(
+            interaction_id="I2",
+            contact_id=contacts[1],
+            interaction_date="2024-09-15",
+            interaction_type="Phone Call",
+            notes="Reviewed financial software upgrade proposal.",
+        ),
+        Interaction(
+            interaction_id="I3",
+            contact_id=contacts[2],
+            interaction_date="2024-08-10",
+            interaction_type="Meeting",
+            notes="Initial meeting to discuss data integration.",
+        ),
+        Interaction(
+            interaction_id="I4",
+            contact_id=contacts[0],
+            interaction_date="2024-10-05",
+            interaction_type="Meeting",
+            notes="Follow-up meeting to discuss project details.",
+        ),
+        Interaction(
+            interaction_id="I5",
+            contact_id=contacts[0],
+            interaction_date="2024-10-15",
+            interaction_type="Phone Call",
+            notes="Discussed budget and timeline adjustments.",
+        ),
+        Interaction(
+            interaction_id="I6",
+            contact_id=contacts[1],
+            interaction_date="2024-09-25",
+            interaction_type="Email",
+            notes="Sent revised proposal for financial software upgrade.",
+        ),
+        Interaction(
+            interaction_id="I7",
+            contact_id=contacts[1],
+            interaction_date="2024-10-05",
+            interaction_type="Meeting",
+            notes="Meeting to finalize contract terms.",
+        ),
+        Interaction(
+            interaction_id="I8",
+            contact_id=contacts[2],
+            interaction_date="2024-08-20",
+            interaction_type="Phone Call",
+            notes="Discussed data integration requirements.",
+        ),
+        Interaction(
+            interaction_id="I9",
+            contact_id=contacts[2],
+            interaction_date="2024-09-01",
+            interaction_type="Email",
+            notes="Sent initial data integration plan.",
+        ),
+    ]
+    Interaction.objects.bulk_create(interactions)
+
+    print("Inserted Interaction data...")
 
     # Insert data into Department
     departments = [
@@ -514,6 +588,28 @@ def populate_database():
 
     print("Inserted DeliveryCertificate data...")
 
+    # Insert data into Category
+    categories = [
+        Category(
+            category_id="CAT1",
+            category_name="Laptops",
+            description="Various brands of laptops",
+        ),
+        Category(
+            category_id="CAT2",
+            category_name="Desktops",
+            description="Various brands of desktop computers",
+        ),
+        Category(
+            category_id="CAT3",
+            category_name="Monitors",
+            description="Various brands of monitors",
+        ),
+    ]
+    Category.objects.bulk_create(categories)
+
+    print("Inserted Category data...")
+
     # Insert data into Equipment
     equipment = [
         Equipment(
@@ -522,6 +618,7 @@ def populate_database():
             inventory_code="INV-001",
             description="HP Probook 745",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ2",
@@ -529,6 +626,7 @@ def populate_database():
             inventory_code="INV-002",
             description="Dell Latitude 5400",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ3",
@@ -536,6 +634,7 @@ def populate_database():
             inventory_code="INV-003",
             description="Lenovo ThinkPad T480",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ4",
@@ -543,6 +642,7 @@ def populate_database():
             inventory_code="INV-004",
             description="MacBook Pro 13-inch",
             active=False,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ5",
@@ -550,6 +650,7 @@ def populate_database():
             inventory_code="INV-005",
             description="Asus ZenBook 14",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ6",
@@ -557,6 +658,7 @@ def populate_database():
             inventory_code="INV-006",
             description="Acer Aspire 5",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ7",
@@ -564,6 +666,7 @@ def populate_database():
             inventory_code="INV-007",
             description="Microsoft Surface Pro 7",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ8",
@@ -571,6 +674,7 @@ def populate_database():
             inventory_code="INV-008",
             description="Razer Blade Stealth 13",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ9",
@@ -578,6 +682,7 @@ def populate_database():
             inventory_code="INV-009",
             description="HP Envy 13",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ10",
@@ -585,6 +690,7 @@ def populate_database():
             inventory_code="INV-010",
             description="Lenovo Yoga 730",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ11",
@@ -592,6 +698,7 @@ def populate_database():
             inventory_code="INV-011",
             description="Dell XPS 13",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ12",
@@ -599,6 +706,7 @@ def populate_database():
             inventory_code="INV-012",
             description="HP Spectre x360",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ13",
@@ -606,6 +714,7 @@ def populate_database():
             inventory_code="INV-013",
             description="Toshiba Tecra A50",
             active=True,
+            category_id=categories[0],
         ),
         Equipment(
             equipment_id="EQ14",
@@ -613,6 +722,71 @@ def populate_database():
             inventory_code="INV-014",
             description="Apple MacBook Air",
             active=False,
+            category_id=categories[0],
+        ),
+        Equipment(
+            equipment_id="EQ15",
+            certificate_id=delivery_certificates[0],
+            inventory_code="INV-015",
+            description="Dell OptiPlex 7070",
+            active=True,
+            category_id=categories[1],
+        ),
+        Equipment(
+            equipment_id="EQ16",
+            certificate_id=delivery_certificates[1],
+            inventory_code="INV-016",
+            description="HP EliteDesk 800",
+            active=True,
+            category_id=categories[1],
+        ),
+        Equipment(
+            equipment_id="EQ17",
+            certificate_id=delivery_certificates[2],
+            inventory_code="INV-017",
+            description="Lenovo ThinkCentre M720",
+            active=True,
+            category_id=categories[1],
+        ),
+        Equipment(
+            equipment_id="EQ18",
+            certificate_id=delivery_certificates[3],
+            inventory_code="INV-018",
+            description="Apple iMac 27-inch",
+            active=True,
+            category_id=categories[1],
+        ),
+        Equipment(
+            equipment_id="EQ19",
+            certificate_id=delivery_certificates[4],
+            inventory_code="INV-019",
+            description="Samsung 24-inch Monitor",
+            active=True,
+            category_id=categories[2],
+        ),
+        Equipment(
+            equipment_id="EQ20",
+            certificate_id=delivery_certificates[5],
+            inventory_code="INV-020",
+            description="Dell UltraSharp 27-inch Monitor",
+            active=True,
+            category_id=categories[2],
+        ),
+        Equipment(
+            equipment_id="EQ21",
+            certificate_id=delivery_certificates[6],
+            inventory_code="INV-021",
+            description="LG 32-inch Monitor",
+            active=True,
+            category_id=categories[2],
+        ),
+        Equipment(
+            equipment_id="EQ22",
+            certificate_id=delivery_certificates[7],
+            inventory_code="INV-022",
+            description="HP 24-inch Monitor",
+            active=True,
+            category_id=categories[2],
         ),
     ]
     Equipment.objects.bulk_create(equipment)

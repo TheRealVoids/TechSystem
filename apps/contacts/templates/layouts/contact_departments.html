@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Contact Departments
+{% endblock title %}
+{% block content %}
+    <h2>Departments for {{ contact.first_name }} {{ contact.last_name }}</h2>
+    <a href="{% url 'contacts:show_contacts' %}">Back to Contacts</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Department ID</th>
+                <th>Department Name</th>
+                <th>Description</th>
+                <th>Assignment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for department in departments %}
+                <tr>
+                    <td>{{ department.department_id.department_id }}</td>
+                    <td>{{ department.department_id.department_name }}</td>
+                    <td>{{ department.department_id.description }}</td>
+                    <td>{{ department.assignment_date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

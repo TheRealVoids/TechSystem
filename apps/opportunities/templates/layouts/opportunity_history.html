@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Opportunity History
+{% endblock title %}
+{% block content %}
+    <h2>Opportunity History for {{ opportunity.opportunity_name }}</h2>
+    <a href="{% url 'opportunities:show_opportunities' %}">Back to Opportunities</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Stage Name</th>
+                <th>Change Date</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in history %}
+                <tr>
+                    <td>{{ record.stage_id.stage_name }}</td>
+                    <td>{{ record.change_date }}</td>
+                    <td>{{ record.notes }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
