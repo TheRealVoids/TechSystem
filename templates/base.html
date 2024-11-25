@@ -47,11 +47,6 @@
               <li>
                 <a href="{% url 'authentication:logout' %}" class="hover:text-faf0e6">Logout</a>
               </li>
-            {% else %}
-              <li>
-                <a href="{% url 'authentication:login' %}" class="hover:text-faf0e6">Login</a>
-                <i class="fi fi-rr-user pl-2"></i>
-              </li>
             {% endif %}
           </ul>
         </div>

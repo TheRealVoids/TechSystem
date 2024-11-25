@@ -6,20 +6,20 @@
     Home
 {% endblock title %}
 {% block content %}
-    <div class="absolute inset-0 min-h-screen bg-cover bg-center w-full h-full "
-         style="background-image: url('{% static 'images/laptop_at_night_laptop_3.jpg' %}')">
-        <div class="relative flex flex-col items-start justify-center min-h-screen bg-gray-900 bg-opacity-50 text-white w-full h-full p-8">
-            <h2 class="text-4xl font-bold mb-4">Welcome to TechSystem</h2>
-            <p class="text-lg mb-6">Your go-to platform for tech solutions.</p>
-            <p class="text-md mb-6">
-                <!-- Add a link to the login page -->
-                Click on the links above to navigate to the different sections of the application.
-            </p>
-            <a href="{% url 'authentication:login' %}"
-               class="relative inline-block px-4 py-2 text-white rounded-lg hover:text-faf0e6 backdrop-filter backdrop-blur-md"
-               style="background: linear-gradient(270deg, rgba(75, 85, 99, 0.5) 0%, rgba(75, 85, 99, 0) 100%)">
-                Login
-            </a>
+    {% if request.user.is_authenticated %}
+        <h2>Hola</h2>
+    {% else %}
+        <div class="absolute inset-0 min-h-screen bg-cover bg-center w-full h-full"
+             style="background-image: url('{% static 'images/laptop_at_night_laptop_3.jpg' %}')">
+            <div class="relative flex flex-col items-start justify-center min-h-screen bg-gray-900 bg-opacity-50 text-white w-full h-full p-8">
+                <h2 class="text-4xl font-bold mb-4">Welcome to TechSystem</h2>
+                <p class="text-lg mb-6">Your go-to platform for tech solutions.</p>
+                <a href="{% url 'authentication:login' %}?next={{ request.path }}"
+                   class="relative inline-block px-4 py-2 text-white rounded-lg hover:text-faf0e6 backdrop-filter backdrop-blur-md"
+                   style="background: linear-gradient(270deg, rgba(75, 85, 99, 0.5) 0%, rgba(75, 85, 99, 0) 100%)">
+                    Login
+                </a>
+            </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock content %}
