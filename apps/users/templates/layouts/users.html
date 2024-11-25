@@ -13,6 +13,7 @@
                 <th>Company NIT</th>
                 <th>Email</th>
                 <th>Company</th>
+                <th>Roles</th>
                 <th>Created At</th>
                 <th>Last Login</th>
             </tr>
@@ -25,6 +26,13 @@
                     <td>{{ user.nit.nit }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.nit.name }}</td>
+                    <td>
+                        <ul>
+                            {% for role in user.roles %}
+                                <li>{{ role.role_name }}: {{ role.description }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
                     <td>{{ user.created_at }}</td>
                     <td>{{ user.last_login }}</td>
                 </tr>

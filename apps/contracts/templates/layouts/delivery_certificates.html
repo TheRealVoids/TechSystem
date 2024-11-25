@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delivery Certificates
+{% endblock title %}
+{% block content %}
+    <h2>Delivery Certificates</h2>
+    <a href="{% url 'contracts:show_contracts' %}">Back to Contracts</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Certificate ID</th>
+                <th>Contract Number</th>
+                <th>Delivery Date</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for certificate in delivery_certificates %}
+                <tr>
+                    <td>{{ certificate.certificate_id }}</td>
+                    <td>{{ certificate.contract_id.contract_number }}</td>
+                    <td>{{ certificate.delivery_date }}</td>
+                    <td>{{ certificate.notes }}</td>
+                    <td>
+                        <a href="{% url 'contracts:show_equipments' certificate.certificate_id %}">Show Equipments</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
