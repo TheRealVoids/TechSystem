@@ -16,6 +16,7 @@
                 <th>Phone</th>
                 <th>Email</th>
                 <th>Last Interaction Date</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +30,11 @@
                     <td>{{ contact.phone }}</td>
                     <td>{{ contact.email }}</td>
                     <td>{{ contact.last_interaction_date }}</td>
+                    <td>
+                        {% if request.user.nit.nit == contact.nit.nit %}
+                            <a href="{% url 'contacts:show_contact_interactions' contact.contact_id %}">Show Interactions</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
