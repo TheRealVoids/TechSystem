@@ -11,4 +11,9 @@ urlpatterns = [
         views.show_contact_interactions,
         name="show_contact_interactions",
     ),
+    path(
+        "<str:contact_id>/departments/",
+        views.show_departments,
+        name="show_departments",
+    ),
 ]

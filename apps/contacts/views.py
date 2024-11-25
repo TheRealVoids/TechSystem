@@ -6,7 +6,7 @@ from apps.common.services.pgadmin.models import Contact
 
 @login_required
 def show_contacts(request):
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.filter(nit=request.user.nit.nit)
     return render(request, "layouts/contacts.html", {"contacts": contacts})
 
 
@@ -18,4 +18,15 @@ def show_contact_interactions(request, contact_id):
         request,
         "layouts/contact_interactions.html",
         {"contact": contact, "interactions": interactions},
+    )
+
+
+@login_required
+def show_departments(request, contact_id):
+    contact = Contact.objects.get(contact_id=contact_id)
+    departments = contact.contactdepartment_set.all()
+    return render(
+        request,
+        "layouts/contact_departments.html",
+        {"contact": contact, "departments": departments},
     )
