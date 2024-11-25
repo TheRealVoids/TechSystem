@@ -14,6 +14,7 @@ from apps.common.services.pgadmin.models import (
     DeliveryCertificate,
     Department,
     Equipment,
+    Interaction,
     Opportunity,
     OpportunityProductService,
     OpportunityStage,
@@ -43,6 +44,7 @@ def reset_database():
         Department,
         Contact,
         Company,
+        Interaction,
     ]
     for model in models:
         model.objects.all().delete()
@@ -128,6 +130,76 @@ def populate_database():
     Contact.objects.bulk_create(contacts)
 
     print("Inserted Contact data...")
+
+    # Insert data into Interaction
+    interactions = [
+        Interaction(
+            interaction_id="I1",
+            contact_id=contacts[0],
+            interaction_date="2024-10-01",
+            interaction_type="Email",
+            notes="Discussed project requirements and timeline.",
+        ),
+        Interaction(
+            interaction_id="I2",
+            contact_id=contacts[1],
+            interaction_date="2024-09-15",
+            interaction_type="Phone Call",
+            notes="Reviewed financial software upgrade proposal.",
+        ),
+        Interaction(
+            interaction_id="I3",
+            contact_id=contacts[2],
+            interaction_date="2024-08-10",
+            interaction_type="Meeting",
+            notes="Initial meeting to discuss data integration.",
+        ),
+        Interaction(
+            interaction_id="I4",
+            contact_id=contacts[0],
+            interaction_date="2024-10-05",
+            interaction_type="Meeting",
+            notes="Follow-up meeting to discuss project details.",
+        ),
+        Interaction(
+            interaction_id="I5",
+            contact_id=contacts[0],
+            interaction_date="2024-10-15",
+            interaction_type="Phone Call",
+            notes="Discussed budget and timeline adjustments.",
+        ),
+        Interaction(
+            interaction_id="I6",
+            contact_id=contacts[1],
+            interaction_date="2024-09-25",
+            interaction_type="Email",
+            notes="Sent revised proposal for financial software upgrade.",
+        ),
+        Interaction(
+            interaction_id="I7",
+            contact_id=contacts[1],
+            interaction_date="2024-10-05",
+            interaction_type="Meeting",
+            notes="Meeting to finalize contract terms.",
+        ),
+        Interaction(
+            interaction_id="I8",
+            contact_id=contacts[2],
+            interaction_date="2024-08-20",
+            interaction_type="Phone Call",
+            notes="Discussed data integration requirements.",
+        ),
+        Interaction(
+            interaction_id="I9",
+            contact_id=contacts[2],
+            interaction_date="2024-09-01",
+            interaction_type="Email",
+            notes="Sent initial data integration plan.",
+        ),
+    ]
+    Interaction.objects.bulk_create(interactions)
+
+    print("Inserted Interaction data...")
 
     # Insert data into Department
     departments = [
