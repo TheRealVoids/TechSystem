@@ -270,3 +270,7 @@ pyrightconfig.json
 **/migrations/*
 !**/migrations/__init__.py
 **/migrations/*.py
+
+node_modules
+static/CACHE
+static/src/output.css
