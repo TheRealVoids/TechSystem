@@ -12,7 +12,14 @@
 {% endblock breadcrumb %}
 {% block content %}
     <h2 class="text-2xl font-bold mb-4">Leases</h2>
-    <table class="table">
+    <div class="my-4">
+        <input type="text"
+               id="search-bar"
+               class="form-control mb-3"
+               placeholder="Search leases"
+               value="{{ search_query }}" />
+    </div>
+    <table class="table" id="leases-table">
         <thead>
             <tr>
                 <th>Customer NIT</th>
@@ -36,4 +43,58 @@
             {% endfor %}
         </tbody>
     </table>
+    <!-- Pagination controls -->
+    <div class="pagination mt-4">
+        <nav>
+            <ul class="flex justify-center space-x-2">
+                {% if leases.has_previous %}
+                    <li>
+                        <a href="?page=1&search={{ search_query }}"
+                           class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">First</a>
+                    </li>
+                    <li>
+                        <a href="?page={{ leases.previous_page_number }}&search={{ search_query }}"
+                           class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Previous</a>
+                    </li>
+                {% endif %}
+                {% for num in leases.paginator.page_range %}
+                    {% if num == leases.number %}
+                        <li>
+                            <span class="px-3 py-2 border rounded bg-blue-500 text-white">{{ num }}</span>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="?page={{ num }}&search={{ search_query }}"
+                               class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if leases.has_next %}
+                    <li>
+                        <a href="?page={{ leases.next_page_number }}&search={{ search_query }}"
+                           class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Next</a>
+                    </li>
+                    <li>
+                        <a href="?page={{ leases.paginator.num_pages }}&search={{ search_query }}"
+                           class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchBar = document.getElementById('search-bar');
+            const tableRows = document.querySelectorAll('#leases-table tbody tr');
+
+            searchBar.addEventListener('input', function () {
+                const searchTerm = searchBar.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        });
+    </script>
 {% endblock content %}

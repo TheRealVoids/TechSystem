@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import redirect, render
 
 from apps.common.services.mongodb.models import Products, RentalRequests
@@ -8,8 +9,26 @@ from apps.leases.forms import LeaseRequestForm
 @login_required
 def show_leases(request):
     user_company_nit = request.user.nit.nit
-    leases = RentalRequests.objects.filter(customer_nit=user_company_nit)
-    return render(request, "layouts/leases.html", {"leases": leases})
+    leases_list = RentalRequests.objects.filter(customer_nit=user_company_nit)
+
+    # Search functionality
+    search_query = request.GET.get("search", "")
+    if search_query:
+        leases_list = leases_list.filter(customer_nit__icontains=search_query)
+
+    # Pagination
+    paginator = Paginator(leases_list, 10)
+    page = request.GET.get("page")
+    try:
+        leases = paginator.page(page)
+    except PageNotAnInteger:
+        leases = paginator.page(1)
+    except EmptyPage:
+        leases = paginator.page(paginator.num_pages)
+
+    return render(
+        request, "layouts/leases.html", {"leases": leases, "search_query": search_query}
+    )
 
 
 @login_required
