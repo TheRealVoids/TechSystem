@@ -3,6 +3,13 @@
 {% block title %}
     Add Lease Request
 {% endblock title %}
+{% block breadcrumb %}
+    <div class="bg-[#dee7e7] p-4 rounded-lg shadow-md mb-4 w-full">
+        <nav class="text-sm text-gray-600">
+            <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a> / <span>Leases</span> / <span>Add Lease Request</span>
+        </nav>
+    </div>
+{% endblock breadcrumb %}
 
 {% block content %}
     <h2>Available Products</h2>
@@ -74,6 +81,21 @@
         }
     </style>
     <div class="container my-4">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" id="search-bar" class="form-control" placeholder="Search by product name or brand">
+            </div>
+            <div class="col-md-6">
+                <select id="category-filter" class="form-control">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>    
+    <div class="container my-4">
         <div class="row row-cols-1 row-cols-md-4 g-4">
             {% for product in products %}
                 <div class="col">
@@ -97,7 +119,7 @@
                             </p>
                             <div class="quantity-selector" data-id="{{ product.id }}">
                                 <button type="button" onclick="decreaseQuantity(this)">-</button>
-                                <input type="number" value="1" min="1" max="{{ product.common_attributes.stock }}">
+                                <input type="number" value="0" min="0" max="{{ product.common_attributes.stock }}">
                                 <button type="button" onclick="increaseQuantity(this)">+</button>
                             </div>                            
                         </div>
@@ -131,5 +153,33 @@
                 input.value = value + 1;
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const searchBar = document.getElementById('search-bar');
+        const categoryFilter = document.getElementById('category-filter');
+        const productCards = document.querySelectorAll('.col'); // Cada tarjeta de producto
+
+        function filterProducts() {
+            const searchTerm = searchBar.value.toLowerCase();
+            const selectedCategory = categoryFilter.value.toLowerCase();
+
+            productCards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const category = card.querySelector('.card-text').textContent.toLowerCase();
+
+                const matchesSearch = title.includes(searchTerm);
+                const matchesCategory = selectedCategory === '' || category.includes(selectedCategory);
+
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = ''; // Mostrar
+                } else {
+                    card.style.display = 'none'; // Ocultar
+                }
+            });
+        }
+
+        searchBar.addEventListener('input', filterProducts);
+        categoryFilter.addEventListener('change', filterProducts);
+    });
     </script>
 {% endblock content %}

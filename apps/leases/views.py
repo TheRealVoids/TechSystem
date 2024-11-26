@@ -27,27 +27,9 @@ def show_leases(request):
 @login_required
 def add_lease_request(request):
     if request.method == "POST":
-        form = LeaseRequestForm(request.POST)
-        if form.is_valid():
-            product_id = form.cleaned_data["product_id"]
-            quantity = form.cleaned_data["quantity"]
-            notes = form.cleaned_data["notes"]
+        # Programar esta parte
 
-            # Obtener el producto seleccionado de MongoDB
-            product = Products.objects.get(id=product_id)
-
-            # Crear una nueva solicitud de arrendamiento (Opportunity)
-            Opportunity.objects.create(
-                nit=request.user.nit,  # Asociar la solicitud con la empresa del usuario
-                contact_id=None,  # Si aplica, puedes enlazar al contacto específico
-                opportunity_name=f"Lease Request: {product.common_attributes['brand']} {product.common_attributes['model']}",
-                description=f"Quantity: {quantity}. Notes: {notes}",
-                estimated_value=product.common_attributes["price"] * quantity,
-                status="open",
-                success_probability=0,
-            )
-
-            return redirect("show_leases")  # Redirigir a la vista de arrendamientos
+        return redirect("show_leases")  # Redirigir a la vista de arrendamientos
     else:
         form = LeaseRequestForm()
 
@@ -56,6 +38,7 @@ def add_lease_request(request):
 
     # Convertir specific_attributes a un diccionario
     products_list = []
+    categories_list = []
     for product in products:
         if product:
             # Convertir el product a un diccionario
@@ -64,6 +47,7 @@ def add_lease_request(request):
             # Verificar si el producto tiene stock
             if product_dict.get("common_attributes", {}).get("stock", 0) > 0:
                 products_list.append(product_dict)
+                categories_list.append(product_dict.get("category"))
             else:
                 print(
                     f"Producto {product_dict.get('common_attributes', {}).get('brand', '')} {product_dict.get('common_attributes', {}).get('model', '')} sin stock"
@@ -74,5 +58,5 @@ def add_lease_request(request):
     return render(
         request,
         "layouts/add_lease_request.html",
-        {"form": form, "products": products_list},
+        {"form": form, "products": products_list, "categories": categories_list},
     )
