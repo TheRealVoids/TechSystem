@@ -3,9 +3,16 @@
 {% block title %}
     Contracts
 {% endblock title %}
+{% block breadcrumb %}
+    <div class="bg-[#dee7e7] p-4 rounded-lg shadow-md mb-4 w-full">
+        <nav class="text-sm text-gray-600">
+            <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a> / <span>Contracts</span>
+        </nav>
+    </div>
+{% endblock breadcrumb %}
 {% block content %}
-    <h2>Contracts</h2>
-    <table>
+    <h2 class="text-2xl font-bold mb-4">Contracts</h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Contract ID</th>
@@ -27,7 +34,9 @@
                     <td>{{ contract.end_date }}</td>
                     <td>{{ contract.monthly_value }}</td>
                     <td>
-                        <a href="{% url 'contracts:show_delivery_certificates' contract.contract_id %}">View Certificates</a>
+                        <div class="table-actions">
+                            <a href="{% url 'contracts:show_delivery_certificates' contract.contract_id %}">View Certificates</a>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

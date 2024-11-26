@@ -4,9 +4,10 @@
     Equipments
 {% endblock title %}
 {% block content %}
-    <h2>Equipments</h2>
-    <a href="{% url 'contracts:show_delivery_certificates' certificate.contract_id.contract_id %}">Back to Delivery Certificates</a>
-    <table>
+    <a href="{% url 'contracts:show_delivery_certificates' certificate.contract_id.contract_id %}"
+       class="inline-block mb-4 px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-300">Back to Delivery Certificates</a>
+    <h2 class="text-2xl font-bold mb-4">Equipments</h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Equipment ID</th>
