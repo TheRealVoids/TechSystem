@@ -12,31 +12,11 @@ CP.initialize_mongo()
 
 # Formulario para agregar una solicitud de arrendamiento
 class LeaseRequestForm(forms.Form):
-    product_id = forms.ChoiceField(
-        label="Available Products", widget=forms.Select(attrs={"class": "form-control"})
-    )
-    quantity = forms.IntegerField(
-        label="Quantity",
-        min_value=1,
-        widget=forms.NumberInput(attrs={"class": "form-control"}),
-    )
     notes = forms.CharField(
         label="Additional Notes",
         required=False,
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 4}),
     )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Obtener productos de MongoDB y establecer opciones dinámicas
-        products = Products.objects.all()
-        self.fields["product_id"].choices = [
-            (
-                str(product.id),
-                f"{product.common_attributes['brand']} {product.common_attributes['model']} ({product.category})",
-            )
-            for product in products
-        ]
 
 
 @login_required
@@ -74,6 +54,25 @@ def add_lease_request(request):
     # Obtener productos para mostrarlos como tarjetas
     products = Products.objects.all()
 
+    # Convertir specific_attributes a un diccionario
+    products_list = []
+    for product in products:
+        if product:
+            # Convertir el product a un diccionario
+            product_dict = product.to_mongo().to_dict()
+
+            # Verificar si el producto tiene stock
+            if product_dict.get("common_attributes", {}).get("stock", 0) > 0:
+                products_list.append(product_dict)
+            else:
+                print(
+                    f"Producto {product_dict.get('common_attributes', {}).get('brand', '')} {product_dict.get('common_attributes', {}).get('model', '')} sin stock"
+                )
+        else:
+            print("Producto no encontrado")
+
     return render(
-        request, "layouts/add_lease_request.html", {"form": form, "products": products}
+        request,
+        "layouts/add_lease_request.html",
+        {"form": form, "products": products_list},
     )
