@@ -3,45 +3,97 @@
 {% block title %}
     Opportunities
 {% endblock title %}
+{% block breadcrumb %}
+    <div class="bg-[#dee7e7] p-4 rounded-lg shadow-md mb-4 w-full">
+        <nav class="text-sm text-gray-600">
+            <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a> / <span>Opportunities</span>
+        </nav>
+    </div>
+{% endblock breadcrumb %}
 {% block content %}
-    <h2 class="text-2xl font-bold mb-4">Opportunities</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Opportunity ID</th>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Opportunity Name</th>
-                <th>Description</th>
-                <th>Estimated Value</th>
-                <th>Creation Date</th>
-                <th>Estimated Close Date</th>
-                <th>Status</th>
-                <th>Success Probability</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for opportunity in opportunities %}
-                <tr>
-                    <td>{{ opportunity.opportunity_id }}</td>
-                    <td>{{ opportunity.nit.name }}</td>
-                    <td>{{ opportunity.contact_id.first_name }} {{ opportunity.contact_id.last_name }}</td>
-                    <td>{{ opportunity.opportunity_name }}</td>
-                    <td>{{ opportunity.description }}</td>
-                    <td>{{ opportunity.estimated_value }}</td>
-                    <td>{{ opportunity.creation_date }}</td>
-                    <td>{{ opportunity.estimated_close_date }}</td>
-                    <td>{{ opportunity.status }}</td>
-                    <td>{{ opportunity.success_probability }}</td>
-                    <td>
-                        <div class="table-actions">
-                            <a href="{% url 'opportunities:show_opportunity_history' opportunity.opportunity_id %}">View History</a>
-                            <a href="{% url 'opportunities:show_opportunity_services' opportunity.opportunity_id %}">View Services</a>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4">Opportunities</h2>
+        <form method="get" action="{% url 'opportunities:show_opportunities' %}" class="my-4 d-flex">
+            <input type="text" name="query" id="search-bar" class="form-control me-2" placeholder="Search opportunities">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <div class="overflow-x-auto">
+            <table class="table" id="opportunities-table" >
+                <thead>
+                    <tr>
+                        <th>Opportunity ID</th>
+                        <th>Company</th>
+                        <th>Contact</th>
+                        <th>Opportunity Name</th>
+                        <th>Description</th>
+                        <th>Estimated Value</th>
+                        <th>Creation Date</th>
+                        <th>Estimated Close Date</th>
+                        <th>Status</th>
+                        <th>Success Probability</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for opportunity in opportunities %}
+                        <tr>
+                            <td>{{ opportunity.opportunity_id }}</td>
+                            <td>{{ opportunity.nit.name }}</td>
+                            <td>{{ opportunity.contact_id.first_name }} {{ opportunity.contact_id.last_name }}</td>
+                            <td>{{ opportunity.opportunity_name }}</td>
+                            <td>{{ opportunity.description }}</td>
+                            <td>{{ opportunity.estimated_value }}</td>
+                            <td>{{ opportunity.creation_date }}</td>
+                            <td>{{ opportunity.estimated_close_date }}</td>
+                            <td>{{ opportunity.status }}</td>
+                            <td>{{ opportunity.success_probability }}</td>
+                            <td>
+                                <div class="table-actions">
+                                    <a href="{% url 'opportunities:show_opportunity_history' opportunity.opportunity_id %}">View History</a>
+                                    <a href="{% url 'opportunities:show_opportunity_services' opportunity.opportunity_id %}">View Services</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Controles de paginación -->
+        <div class="pagination mt-4">
+            <nav>
+                <ul class="flex justify-center space-x-2">
+                    {% if opportunities.has_previous %}
+                        <li>
+                            <a href="?page=1" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">First</a>
+                        </li>
+                        <li>
+                            <a href="?page={{ opportunities.previous_page_number }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Previous</a>
+                        </li>
+                    {% endif %}
+        
+                    {% for num in opportunities.paginator.page_range %}
+                        {% if num == opportunities.number %}
+                            <li>
+                                <span class="px-3 py-2 border rounded bg-blue-500 text-white">{{ num }}</span>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="?page={{ num }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+        
+                    {% if opportunities.has_next %}
+                        <li>
+                            <a href="?page={{ opportunities.next_page_number }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Next</a>
+                        </li>
+                        <li>
+                            <a href="?page={{ opportunities.paginator.num_pages }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Last</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>        
+    </div>
 {% endblock content %}

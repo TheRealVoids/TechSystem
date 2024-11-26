@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+from mongoengine import connect
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -105,6 +106,14 @@ MONGO_CONFIG = {
     "password": os.getenv("DB_PASSWORD_MONGO"),
     "authentication_source": "admin",
 }
+
+connect(
+    db=MONGO_CONFIG["db"],
+    host=MONGO_CONFIG["host"],
+    username=MONGO_CONFIG["username"],
+    password=MONGO_CONFIG["password"],
+    authentication_source=MONGO_CONFIG["authentication_source"],
+)
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 LOGIN_URL = "/auth/login/"

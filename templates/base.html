@@ -6,15 +6,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="TechSystem is your go-to platform for tech solutions." />
+    <meta name="description"
+          content="TechSystem is your go-to platform for tech solutions." />
     <meta name="keywords" content="TechSystem, technology, solutions, platform" />
-    <title>{% block title %}{% endblock title %}</title>
+    <title>
+      {% block title %}
+      {% endblock title %}
+    </title>
     {% compress css %}
       <link rel="stylesheet" href="{% static 'src/output.css' %}" />
     {% endcompress %}
     <link rel="stylesheet" href="{% static 'src/styles.css' %}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <style>
       body {
         font-family: 'Source Sans Pro', sans-serif;
@@ -27,21 +31,43 @@
     <header class="bg-[#0288d1] text-white shadow-md sticky top-0 z-50">
       <nav class="p-4">
         <div class="container mx-auto flex justify-between items-center">
-          <a href="{% url 'index' %}" class="text-2xl font-bold text-white hover:text-[#b3e5fc] transition duration-300">TechSystem</a>
+          <a href="{% url 'index' %}"
+             class="text-2xl font-bold text-white hover:text-[#b3e5fc] transition duration-300">TechSystem</a>
           <ul class="flex space-x-6">
             {% if request.user.is_authenticated %}
-              <li><a href="{% url 'users:show_user_company_details' %}" class="nav-link text-white hover:text-[#b3e5fc] active:text-[#e1f5fe] transition duration-300">My Company Details</a></li>
-              <li><a href="{% url 'contacts:show_contacts' %}" class="nav-link text-white hover:text-[#b3e5fc] active:text-[#e1f5fe] transition duration-300">Contacts</a></li>
-              <li><a href="{% url 'contracts:show_contracts' %}" class="nav-link text-white hover:text-[#b3e5fc] active:text-[#e1f5fe] transition duration-300">Contracts</a></li>
-              <li><a href="{% url 'users:show_users' %}" class="nav-link text-white hover:text-[#b3e5fc] active:text-[#e1f5fe] transition duration-300">Users</a></li>
-              <li><a href="{% url 'opportunities:show_opportunities' %}" class="nav-link text-white hover:text-[#b3e5fc] active:text-[#e1f5fe] transition duration-300">Opportunities</a></li>
-              <li><a href="{% url 'authentication:logout' %}" class="nav-link text-white hover:text-[#b3e5fc] transition duration-300">Logout</a></li>
+              <li>
+                <a href="{% url 'users:show_user_company_details' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'leases:show_leases' %}border-black{% endif %}">My Company Details</a>
+              </li>
+              <li>
+                <a href="{% url 'leases:show_leases' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'leases:show_leases' %}border-black{% endif %}">Leases</a>
+              </li>
+              <li>
+                <a href="{% url 'contacts:show_contacts' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'contacts:show_contacts' %}border-black{% endif %}">Contacts</a>
+              </li>
+              <li>
+                <a href="{% url 'contracts:show_contracts' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'contracts:show_contracts' %}border-black{% endif %}">Contracts</a>
+              </li>
+              <li>
+                <a href="{% url 'users:show_users' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'users:show_users' %}border-black{% endif %}">Users</a>
+              </li>
+              <li>
+                <a href="{% url 'opportunities:show_opportunities' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'leases:show_leases' %}border-black{% endif %}">Opportunities</a>
+              </li>
+              <li>
+                <a href="{% url 'authentication:logout' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105">Logout</a>
+              </li>
             {% endif %}
-          </ul>          
+          </ul>
         </div>
       </nav>
     </header>
-
     <main class="flex-grow w-full mx-auto p-6">
       {% if request.user.is_authenticated %}
         {% block breadcrumb %}
@@ -52,7 +78,6 @@
         {% endblock content %}
       </div>
     </main>
-
     <footer class="bg-[#0288d1] text-white text-center py-4 mt-6">
       <p>2024 TechSystem. All rights reserved.</p>
     </footer>

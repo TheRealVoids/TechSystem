@@ -11,5 +11,85 @@
     </div>
 {% endblock breadcrumb %}
 {% block content %}
-    <h2>Leases</h2>
+    <h2 class="text-2xl font-bold mb-4">Leases</h2>
+    <div class="my-4">
+        <form method="get"
+              action="{% url 'leases:show_leases' %}"
+              class="my-4 d-flex">
+            <input type="text"
+                   name="search"
+                   id="search-bar"
+                   class="form-control me-2"
+                   placeholder="Search leases"
+                   value="{{ search_query }}" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <table class="table" id="leases-table">
+        <thead>
+            <tr>
+                <th>Customer NIT</th>
+                <th>Request Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lease in leases %}
+                <tr>
+                    <td>{{ lease.customer_nit }}</td>
+                    <td>{{ lease.request_date }}</td>
+                    <td>
+                        <span class="badge {% if lease.status == 'pending' %}badge-secondary {% elif lease.status == 'approved' %}badge-success {% elif lease.status == 'rejected' %}badge-danger {% endif %}">
+                            {{ lease.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="table-actions">
+                            <a href="{% url 'leases:show_lease_products' lease.id %}">Show Products</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Pagination controls -->
+    <div class="pagination mt-4">
+        <nav>
+            <ul class="flex justify-center space-x-2">
+                {% if leases.has_previous %}
+                    <li>
+                        <a href="?page=1&search={{ search_query }}"
+                           class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">First</a>
+                    </li>
+                    <li>
+                        <a href="?page={{ leases.previous_page_number }}&search={{ search_query }}"
+                           class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Previous</a>
+                    </li>
+                {% endif %}
+                {% for num in leases.paginator.page_range %}
+                    {% if num == leases.number %}
+                        <li>
+                            <span class="px-3 py-2 border rounded bg-blue-500 text-white">{{ num }}</span>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="?page={{ num }}&search={{ search_query }}"
+                               class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if leases.has_next %}
+                    <li>
+                        <a href="?page={{ leases.next_page_number }}&search={{ search_query }}"
+                           class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Next</a>
+                    </li>
+                    <li>
+                        <a href="?page={{ leases.paginator.num_pages }}&search={{ search_query }}"
+                           class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 {% endblock content %}

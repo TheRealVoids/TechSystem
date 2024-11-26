@@ -173,31 +173,31 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-        const searchBar = document.getElementById('search-bar');
-        const categoryFilter = document.getElementById('category-filter');
-        const productCards = document.querySelectorAll('.col'); // Cada tarjeta de producto
+            const searchBar = document.getElementById('search-bar');
+            const categoryFilter = document.getElementById('category-filter');
+            const productCards = document.querySelectorAll('.col'); // Cada tarjeta de producto
 
-        function filterProducts() {
-            const searchTerm = searchBar.value.toLowerCase();
-            const selectedCategory = categoryFilter.value.toLowerCase();
+            function filterProducts() {
+                const searchTerm = searchBar.value.toLowerCase();
+                const selectedCategory = categoryFilter.value.toLowerCase();
 
-            productCards.forEach(card => {
-                const title = card.querySelector('.card-title').textContent.toLowerCase();
-                const category = card.querySelector('.card-text').textContent.toLowerCase();
+                productCards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const category = card.querySelector('.card-text').textContent.toLowerCase();
 
-                const matchesSearch = title.includes(searchTerm);
-                const matchesCategory = selectedCategory === '' || category.includes(selectedCategory);
+                    const matchesSearch = title.includes(searchTerm);
+                    const matchesCategory = selectedCategory === '' || category.includes(selectedCategory);
 
-                if (matchesSearch && matchesCategory) {
-                    card.style.display = ''; // Mostrar
-                } else {
-                    card.style.display = 'none'; // Ocultar
-                }
-            });
-        }
+                    if (matchesSearch && matchesCategory) {
+                        card.style.display = ''; // Mostrar
+                    } else {
+                        card.style.display = 'none'; // Ocultar
+                    }
+                });
+            }
 
-        searchBar.addEventListener('input', filterProducts);
-        categoryFilter.addEventListener('change', filterProducts);
-    });
+            searchBar.addEventListener('input', filterProducts);
+            categoryFilter.addEventListener('change', filterProducts);
+        });
     </script>
 {% endblock content %}

@@ -17,4 +17,9 @@ urlpatterns = [
         views.save_specific_attributes,
         name="save_specific_attributes",
     ),
+    path(
+        "<str:lease_id>/products/",
+        views.show_lease_products,
+        name="show_lease_products",
+    ),
 ]
