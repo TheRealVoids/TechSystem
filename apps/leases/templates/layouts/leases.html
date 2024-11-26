@@ -39,7 +39,11 @@
                 <tr>
                     <td>{{ lease.customer_nit }}</td>
                     <td>{{ lease.request_date }}</td>
-                    <td>{{ lease.status }}</td>
+                    <td>
+                        <span class="badge {% if lease.status == 'pending' %}badge-secondary {% elif lease.status == 'approved' %}badge-success {% elif lease.status == 'rejected' %}badge-danger {% endif %}">
+                            {{ lease.status }}
+                        </span>
+                    </td>
                     <td>
                         <div class="table-actions">
                             <a href="{% url 'leases:show_lease_products' lease.id %}">Show Products</a>
