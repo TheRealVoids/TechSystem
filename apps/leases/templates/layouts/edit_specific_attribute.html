@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Edit Specific Attributes
+{% endblock title %}
+{% block content %}
+  <style>
+    .placeholder-gray-500::placeholder {
+      color: #6b7280; 
+    }
+  </style>
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold mb-4">Edit Specific Attributes</h2>
+    <form method="post"
+          action="{% url 'leases:save_specific_attributes' lease_id %}">
+      {% csrf_token %}
+      <div id="attributes-container">
+        {% for key, value in specific_attributes.items %}
+          <div class="attribute-item mb-4">
+            <input type="text"
+                   name="specific_attributes[]"
+                   value="{{ key }}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500"
+                   placeholder="Attribute Name"
+                   readonly />
+            <input type="text"
+                   name="specific_attributes[]"
+                   value="{{ value }}"
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500"
+                   placeholder="Attribute Value" />
+            <button type="button"
+                    class="remove-attribute bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mt-2">
+              Remove
+            </button>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="mb-4">
+        <select id="attribute-type" class="form-control">
+          <option value="">Select Attribute Type</option>
+          {% for field in available_fields %}
+            <option value="{{ field }}">{{ field|capfirst }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="button"
+              id="add-attribute"
+              class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        Add Attribute
+      </button>
+      <button type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+        Save
+      </button>
+    </form>
+  </div>
+  <script>
+      document.getElementById('add-attribute').addEventListener('click', function() {
+          var attributeType = document.getElementById('attribute-type').value;
+          if (attributeType) {
+              var container = document.getElementById('attributes-container');
+              var div = document.createElement('div');
+              div.className = 'attribute-item mb-4';
+              div.innerHTML = `
+                  <input type="text" name="specific_attributes[]" value="${attributeType}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500" placeholder="Attribute Name" readonly />
+                  <input type="text" name="specific_attributes[]" value="" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500" placeholder="Attribute Value" />
+                  <button type="button" class="remove-attribute bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mt-2">Remove</button>
+              `;
+              container.appendChild(div);
+  
+              // Remove the selected option from the dropdown
+              var select = document.getElementById('attribute-type');
+              select.querySelector(`option[value="${attributeType}"]`).remove();
+          }
+      });
+  
+      document.addEventListener('click', function(e) {
+          if (e.target && e.target.classList.contains('remove-attribute')) {
+              var attributeName = e.target.previousElementSibling.previousElementSibling.value;
+              var select = document.getElementById('attribute-type');
+  
+              // Add the removed attribute back to the dropdown
+              var option = document.createElement('option');
+              option.value = attributeName;
+              option.text = attributeName.charAt(0).toUpperCase() + attributeName.slice(1);
+              select.appendChild(option);
+  
+              e.target.parentElement.remove();
+          }
+      });
+  </script>
+{% endblock content %}
