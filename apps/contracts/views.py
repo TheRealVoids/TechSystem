@@ -1,13 +1,46 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from datetime import date
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
+
+import apps.common.services.mongodb.apps as CN
+from apps.common.services.mongodb.models import (
+    Products,
+    RentalRequests,
+    RequestedEquipments,
+)
 from apps.common.services.pgadmin.models import Contract, DeliveryCertificate
 
 
-@login_required
+@csrf_exempt
 def show_contracts(request):
-    contracts = Contract.objects.filter(nit=request.user.nit)
-    return render(request, "layouts/contracts.html", {"contracts": contracts})
+    if request.method == "GET":
+        contracts = Contract.objects.filter(nit=request.user.nit)
+        today = date.today()
+
+        contract_list = []
+        for contract in contracts:
+            if contract.end_date < today:
+                status = {"label": "Cerrado", "class": "bg-red-200 text-red-800"}
+            elif contract.start_date > today:
+                status = {"label": "Próximo", "class": "bg-yellow-200 text-yellow-800"}
+            else:
+                status = {"label": "Activo", "class": "bg-green-200 text-green-800"}
+
+            contract_list.append(
+                {
+                    "contract_id": contract.contract_id,
+                    "contract_number": contract.contract_number,
+                    "nit_id": contract.nit_id,
+                    "monthly_value": contract.monthly_value,
+                    "start_date": contract.start_date,
+                    "end_date": contract.end_date,
+                    "status": status,
+                }
+            )
+
+        return render(request, "layouts/contracts.html", {"contracts": contract_list})
 
 
 @login_required

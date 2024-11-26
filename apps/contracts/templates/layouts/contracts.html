@@ -11,25 +11,33 @@
     </div>
 {% endblock breadcrumb %}
 {% block content %}
+    <style>
+        .center-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    </style>
     <h2 class="text-2xl font-bold mb-4">Contracts</h2>
     <table class="table">
         <thead>
-            <tr>
-                <th>Contract ID</th>
-                <th>Company NIT</th>
-                <th>Contract Number</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Monthly Value</th>
-                <th>Actions</th>
+            <tr class="bg-gray-200">
+                <th class="px-4 py-2 border">Contract ID</th>
+                <th class="px-4 py-2 border">Contract Number</th>
+                <th class="px-4 py-2 border">Company NIT</th>
+                <th class="px-4 py-2 border">Monthly Value</th>
+                <th class="px-4 py-2 border">Start Date</th>
+                <th class="px-4 py-2 border">End Date</th>
+                <th class="px-4 py-2 border">Status</th>
             </tr>
         </thead>
         <tbody>
             {% for contract in contracts %}
                 <tr>
                     <td>{{ contract.contract_id }}</td>
-                    <td>{{ contract.nit.nit }}</td>
                     <td>{{ contract.contract_number }}</td>
+                    <td>{{ contract.nit_id }}</td>
                     <td>{{ contract.start_date }}</td>
                     <td>{{ contract.end_date }}</td>
                     <td>{{ contract.monthly_value }}</td>
@@ -42,4 +50,7 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="center-button">
+        <button class="btn btn-primary" onclick="window.location.href='/leases/add-lease-request/'">Add Lease</button>
+    </div>
 {% endblock content %}
