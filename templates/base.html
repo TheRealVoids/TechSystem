@@ -33,7 +33,8 @@
           <ul class="flex space-x-4">
             {% if request.user.is_authenticated %}
               <li>
-                <a href="{% url 'users:show_user_company_details' %}">My Company Details</a>
+                <a href="{% url 'users:show_user_company_details' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'leases:show_leases' %}border-black{% endif %}">My Company Details</a>
               </li>
               <li>
                 <a href="{% url 'leases:show_leases' %}"
@@ -52,7 +53,8 @@
                    class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'users:show_users' %}border-black{% endif %}">Users</a>
               </li>
               <li>
-                <a href="{% url 'opportunities:show_opportunities' %}">Opportunities</a>
+                <a href="{% url 'opportunities:show_opportunities' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'leases:show_leases' %}border-black{% endif %}">Opportunities</a>
               </li>
               <li>
                 <a href="{% url 'authentication:logout' %}"
