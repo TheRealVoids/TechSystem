@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db.models import F
+from django.db.models import CharField, F, Q, TextField
 from django.shortcuts import render
 
 from apps.common.services.pgadmin.models import Company, UserAccount
@@ -8,7 +8,21 @@ from apps.common.services.pgadmin.models import Company, UserAccount
 
 @login_required
 def show_users(request):
+    query = request.GET.get("query")
     users_list = UserAccount.objects.order_by("user_id")
+
+    if query:
+        fields = [
+            field.name
+            for field in UserAccount._meta.get_fields()
+            if isinstance(field, (CharField, TextField))
+        ]
+
+        query_filter = Q()
+        for field in fields:
+            query_filter |= Q(**{f"{field}__icontains": query})
+
+        users_list = users_list.filter(query_filter)
 
     for user in users_list:
         roles = user.userrole_set.select_related("role_id").values(

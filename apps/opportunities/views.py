@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import CharField, Q, TextField
 from django.shortcuts import render
 
 from apps.common.services.pgadmin.models import (
@@ -11,10 +12,25 @@ from apps.common.services.pgadmin.models import (
 
 @login_required
 def show_opportunities(request):
+    query = request.GET.get("query")
     opportunities_list = Opportunity.objects.all().order_by("opportunity_id")
-    paginator = Paginator(opportunities_list, 10)
 
+    if query:
+        fields = [
+            field.name
+            for field in Opportunity._meta.get_fields()
+            if isinstance(field, (CharField, TextField))
+        ]
+
+        query_filter = Q()
+        for field in fields:
+            query_filter |= Q(**{f"{field}__icontains": query})
+
+        opportunities_list = opportunities_list.filter(query_filter)
+
+    paginator = Paginator(opportunities_list, 10)
     page = request.GET.get("page")
+
     try:
         opportunities = paginator.page(page)
     except PageNotAnInteger:
