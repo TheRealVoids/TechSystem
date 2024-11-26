@@ -3,40 +3,106 @@
 {% block title %}
     Users
 {% endblock title %}
+{% block breadcrumb %}
+    <div class="bg-[#dee7e7] p-4 rounded-lg shadow-md mb-4 w-full">
+        <nav class="text-sm text-gray-600">
+            <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a> / <span>Users</span>
+        </nav>
+    </div>
+{% endblock breadcrumb %}
 {% block content %}
-    <h2 class="text-2xl font-bold mb-4">Users</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>User ID</th>
-                <th>Username</th>
-                <th>Company NIT</th>
-                <th>Email</th>
-                <th>Company</th>
-                <th>Roles</th>
-                <th>Created At</th>
-                <th>Last Login</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.user_id }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.nit.nit }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.nit.name }}</td>
-                    <td>
-                        <ul>
-                            {% for role in user.roles %}
-                                <li>{{ role.role_name }}: {{ role.description }}</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                    <td>{{ user.created_at }}</td>
-                    <td>{{ user.last_login }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4">Users</h2>
+        <div class="my-4">
+            <input type="text" id="search-bar" class="form-control mb-3" placeholder="Search users">
+        </div>
+        <div class="overflow-x-auto">
+            <table class="table" id="users-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Company NIT</th>
+                        <th>Email</th>
+                        <th>Company</th>
+                        <th>Roles</th>
+                        <th>Created At</th>
+                        <th>Last Login</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.user_id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.nit.nit }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.nit.name }}</td>
+                            <td>
+                                <ul>
+                                    {% for role in user.roles %}
+                                        <li>{{ role.role_name }}: {{ role.description }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{ user.created_at }}</td>
+                            <td>{{ user.last_login }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Controles de paginación -->
+        <div class="pagination mt-4">
+            <nav>
+                <ul class="flex justify-center space-x-2">
+                    {% if users.has_previous %}
+                        <li>
+                            <a href="?page=1" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">First</a>
+                        </li>
+                        <li>
+                            <a href="?page={{ users.previous_page_number }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Previous</a>
+                        </li>
+                    {% endif %}
+        
+                    {% for num in users.paginator.page_range %}
+                        {% if num == users.number %}
+                            <li>
+                                <span class="px-3 py-2 border rounded bg-blue-500 text-white">{{ num }}</span>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="?page={{ num }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+        
+                    {% if users.has_next %}
+                        <li>
+                            <a href="?page={{ users.next_page_number }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Next</a>
+                        </li>
+                        <li>
+                            <a href="?page={{ users.paginator.num_pages }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Last</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>        
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchBar = document.getElementById('search-bar');
+            const tableRows = document.querySelectorAll('#users-table tbody tr');
+
+            searchBar.addEventListener('input', function () {
+                const searchTerm = searchBar.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        });
+    </script>
 {% endblock content %}

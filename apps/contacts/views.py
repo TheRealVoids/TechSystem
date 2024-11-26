@@ -7,9 +7,7 @@ from apps.common.services.pgadmin.models import Contact
 
 @login_required
 def show_contacts(request):
-    contacts_list = Contact.objects.filter(nit=request.user.nit.nit).order_by(
-        "last_name"
-    )
+    contacts_list = Contact.objects.order_by("contact_id")
     paginator = Paginator(contacts_list, 10)
 
     page = request.GET.get("page")
