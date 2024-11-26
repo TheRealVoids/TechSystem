@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Lease Products
+{% endblock title %}
+{% block breadcrumb %}
+    <div class="bg-[#dee7e7] p-4 rounded-lg shadow-md mb-4 w-full">
+        <nav class="text-sm text-gray-600">
+            <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a> / <a href="{% url 'leases:show_leases' %}" class="hover:text-gray-800">Leases</a> / <span>Lease Products</span>
+        </nav>
+    </div>
+{% endblock breadcrumb %}
+{% block content %}
+    <a href="{% url 'leases:show_leases' %}"
+       class="inline-block mb-4 px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-300">Back to Leases</a>
+    <h2 class="text-2xl font-bold mb-4">Lease Products</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for product in products %}
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="{{ product.image_url }}"
+                     alt="{{ product.common_attributes.brand }} {{ product.common_attributes.model }}"
+                     class="w-full h-48 object-cover"
+                     width="300"
+                     height="200" />
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold">
+                        {{ product.common_attributes.brand }} {{ product.common_attributes.model }}
+                    </h3>
+                    <p class="text-gray-600">Category: {{ product.category }}</p>
+                    <p class="text-gray-600">Price: ${{ product.common_attributes.price }}</p>
+                    <p class="text-gray-600">Quantity: {{ product.quantity }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

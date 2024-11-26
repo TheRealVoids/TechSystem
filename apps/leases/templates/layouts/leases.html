@@ -11,5 +11,29 @@
     </div>
 {% endblock breadcrumb %}
 {% block content %}
-    <h2>Leases</h2>
+    <h2 class="text-2xl font-bold mb-4">Leases</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Customer NIT</th>
+                <th>Request Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lease in leases %}
+                <tr>
+                    <td>{{ lease.customer_nit }}</td>
+                    <td>{{ lease.request_date }}</td>
+                    <td>{{ lease.status }}</td>
+                    <td>
+                        <div class="table-actions">
+                            <a href="{% url 'leases:show_lease_products' lease.id %}">Show Products</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
