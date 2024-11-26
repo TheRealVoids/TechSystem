@@ -6,7 +6,6 @@ app_name = "contracts"
 
 urlpatterns = [
     path("", views.show_contracts, name="show_contracts"),
-    path("create/", views.create_contract, name="create_contracts"),
     path(
         "<str:contract_id>/delivery_certificates/",
         views.show_delivery_certificates,

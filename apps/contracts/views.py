@@ -16,11 +16,9 @@ from apps.common.services.pgadmin.models import Contract, DeliveryCertificate
 @csrf_exempt
 def show_contracts(request):
     if request.method == "GET":
-        # Consultar los contratos existentes
         contracts = Contract.objects.filter(nit=request.user.nit)
         today = date.today()
 
-        # Convertir contratos a una lista de diccionarios con estado calculado
         contract_list = []
         for contract in contracts:
             if contract.end_date < today:
@@ -30,7 +28,6 @@ def show_contracts(request):
             else:
                 status = {"label": "Activo", "class": "bg-green-200 text-green-800"}
 
-            # Agregar contrato con el estado calculado a la lista
             contract_list.append(
                 {
                     "contract_id": contract.contract_id,
@@ -46,38 +43,6 @@ def show_contracts(request):
         return render(request, "layouts/contracts.html", {"contracts": contract_list})
 
 
-@csrf_exempt
-def create_contract(request):
-    if request.method == "GET":
-        # Consultar todos los productos disponibles en MongoDB
-        CN.initialize_mongo()
-        products = Products.objects.all()
-        return render(request, "create_contract.html", {"products": products})
-
-    elif request.method == "POST":
-        # Procesar datos del formulario para crear un contrato
-        customer_nit = request.POST.get("customer_nit")
-        contract_products = request.POST.getlist("product_id")
-        quantities = request.POST.getlist("quantity")
-
-        # Crear lista de productos solicitados
-        requested_equipment = []
-        for product_id, quantity in zip(contract_products, quantities):
-            requested_equipment.append(
-                RequestedEquipments(product_id=product_id, quantity=int(quantity))
-            )
-
-        # Crear el contrato
-        contract = RentalRequests(
-            customer_nit=customer_nit,
-            status="pending",
-            requested_equipment=requested_equipment,
-        )
-        contract.save()
-
-        return redirect("contracts")  # Redirige a la página de contratos
-
-
 @login_required
 def show_delivery_certificates(request, contract_id):
     contract = Contract.objects.get(contract_id=contract_id)
@@ -86,4 +51,16 @@ def show_delivery_certificates(request, contract_id):
         request,
         "layouts/delivery_certificates.html",
         {"delivery_certificates": delivery_certificates},
+    )
+
+
+@login_required
+def show_equipments(request, certificate_id):
+    certificate = DeliveryCertificate.objects.get(certificate_id=certificate_id)
+    equipments = certificate.equipment_set.all()
+    print(equipments.values())
+    return render(
+        request,
+        "layouts/equipments.html",
+        {"certificate": certificate, "equipments": equipments},
     )
