@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -9,14 +10,14 @@ from apps.common.services.mongodb.models import (
     RentalRequests,
     RequestedEquipments,
 )
-from apps.common.services.pgadmin.models import Contract
+from apps.common.services.pgadmin.models import Contract, DeliveryCertificate
 
 
 @csrf_exempt
 def show_contracts(request):
     if request.method == "GET":
         # Consultar los contratos existentes
-        contracts = Contract.objects.all()
+        contracts = Contract.objects.filter(nit=request.user.nit)
         today = date.today()
 
         # Convertir contratos a una lista de diccionarios con estado calculado
@@ -75,3 +76,14 @@ def create_contract(request):
         contract.save()
 
         return redirect("contracts")  # Redirige a la página de contratos
+
+
+@login_required
+def show_delivery_certificates(request, contract_id):
+    contract = Contract.objects.get(contract_id=contract_id)
+    delivery_certificates = contract.deliverycertificate_set.all()
+    return render(
+        request,
+        "layouts/delivery_certificates.html",
+        {"delivery_certificates": delivery_certificates},
+    )

@@ -18,6 +18,7 @@
                 <th>Estimated Close Date</th>
                 <th>Status</th>
                 <th>Success Probability</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,10 @@
                     <td>{{ opportunity.estimated_close_date }}</td>
                     <td>{{ opportunity.status }}</td>
                     <td>{{ opportunity.success_probability }}</td>
+                    <td>
+                        <a href="{% url 'opportunities:show_opportunity_history' opportunity.opportunity_id %}">View History</a>
+                        <a href="{% url 'opportunities:show_opportunity_services' opportunity.opportunity_id %}">View Services</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

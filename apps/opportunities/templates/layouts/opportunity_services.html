@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Opportunity Services
+{% endblock title %}
+{% block content %}
+    <h2>Opportunity Services for {{ opportunity.opportunity_name }}</h2>
+    <a href="{% url 'opportunities:show_opportunities' %}">Back to Opportunities</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Service ID</th>
+                <th>Service Name</th>
+                <th>Quantity</th>
+                <th>Negotiated Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services %}
+                <tr>
+                    <td>{{ service.product_service_id.product_service_id }}</td>
+                    <td>{{ service.product_service_id.product_service_name }}</td>
+                    <td>{{ service.quantity }}</td>
+                    <td>{{ service.negotiated_price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
