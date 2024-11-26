@@ -3,10 +3,20 @@
 {% block title %}
     Contact Departments
 {% endblock title %}
+{% block breadcrumb %}
+    <div class="bg-[#dee7e7] p-4 rounded-lg shadow-md mb-4 w-full">
+        <nav class="text-sm text-gray-600">
+            <a href="{% url 'contacts:show_contacts' %}" class="hover:text-gray-800">Contacts</a> / <span>Interactions</span>
+        </nav>
+    </div>
+{% endblock breadcrumb %}
 {% block content %}
-    <h2>Departments for {{ contact.first_name }} {{ contact.last_name }}</h2>
-    <a href="{% url 'contacts:show_contacts' %}">Back to Contacts</a>
-    <table>
+    <a href="{% url 'contacts:show_contacts' %}"
+       class="inline-block mb-4 px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-300">Back to Contacts</a>
+    <h2 class="text-3xl font-bold mb-4">
+        Contact Interactions for {{ contact.first_name }} {{ contact.last_name }}
+    </h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Department ID</th>

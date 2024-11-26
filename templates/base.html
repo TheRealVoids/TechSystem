@@ -23,45 +23,56 @@
         font-family: 'Source Sans Pro', sans-serif;
       }
     </style>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   </head>
-  <body>
-    <header>
-      <a href="{% url 'index' %}">
-        <h1>TechSystem</h1>
-      </a>
-      <nav>
-        <ul>
-          {% if request.user.is_authenticated %}
-            <li>
-              <a href="{% url 'users:show_user_company_details' %}">My Company Details</a>
-            </li>
-            <li>
-              <a href="{% url 'leases:show_leases' %}">Leases</a>
-            </li>
-            <li>
-              <a href="{% url 'contacts:show_contacts' %}">Contacts</a>
-            </li>
-            <li>
-              <a href="{% url 'contracts:show_contracts' %}">Contracts</a>
-            </li>
-            <li>
-              <a href="{% url 'users:show_users' %}">Users</a>
-            </li>
-            <li>
-              <a href="{% url 'opportunities:show_opportunities' %}">Opportunities</a>
-            </li>
-            <li>
-              <a href="{% url 'authentication:logout' %}">Logout</a>
-            </li>
-          {% else %}
-            <li>
-              <a href="{% url 'authentication:login' %}">Login</a>
-            </li>
-          {% endif %}
-        </ul>
+  <body class="min-h-screen flex flex-col bg-faf0e6 text-352f44">
+    <header class="bg-white text-b9b4c7 shadow-md">
+      <nav class="p-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <div class="text-b9b4c7 hover:text-faf0e6">
+            <a href="{% url 'index' %}" class="text-2xl font-bold">TechSystem</a>
+          </div>
+          <ul class="flex space-x-4">
+            {% if request.user.is_authenticated %}
+              <li>
+                <a href="{% url 'users:show_user_company_details' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'leases:show_leases' %}border-black{% endif %}">My Company Details</a>
+              </li>
+              <li>
+                <a href="{% url 'leases:show_leases' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'leases:show_leases' %}border-black{% endif %}">Leases</a>
+              </li>
+              <li>
+                <a href="{% url 'contacts:show_contacts' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'contacts:show_contacts' %}border-black{% endif %}">Contacts</a>
+              </li>
+              <li>
+                <a href="{% url 'contracts:show_contracts' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'contracts:show_contracts' %}border-black{% endif %}">Contracts</a>
+              </li>
+              <li>
+                <a href="{% url 'users:show_users' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'users:show_users' %}border-black{% endif %}">Users</a>
+              </li>
+              <li>
+                <a href="{% url 'opportunities:show_opportunities' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105 {% if request.resolver_match.url_name == 'leases:show_leases' %}border-black{% endif %}">Opportunities</a>
+              </li>
+              <li>
+                <a href="{% url 'authentication:logout' %}"
+                   class="hover:text-faf0e6 border-b-2 border-transparent hover:border-black transition duration-300 ease-in-out transform hover:scale-105">Logout</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
       </nav>
     </header>
-    <main class="flex-grow container mx-auto">
+    <main class="flex-grow w-full mx-auto p-4">
+      {% if request.user.is_authenticated %}
+        {% block breadcrumb %}
+        {% endblock breadcrumb %}
+      {% endif %}
       {% block content %}
       {% endblock content %}
     </main>

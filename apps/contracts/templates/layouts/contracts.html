@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Contracts{% endblock title %}
-
+{% block title %}
+    Contracts
+{% endblock title %}
+{% block breadcrumb %}
+    <div class="bg-[#dee7e7] p-4 rounded-lg shadow-md mb-4 w-full">
+        <nav class="text-sm text-gray-600">
+            <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a> / <span>Contracts</span>
+        </nav>
+    </div>
+{% endblock breadcrumb %}
 {% block content %}
-<div class="container mx-auto mt-8">
-    <h2 class="text-2xl font-bold mb-6">Contracts</h2>
-    <table class="min-w-full bg-white border border-gray-300">
+    <h2 class="text-2xl font-bold mb-4">Contracts</h2>
+    <table class="table">
         <thead>
             <tr class="bg-gray-200">
                 <th class="px-4 py-2 border">Contract ID</th>
@@ -19,17 +26,17 @@
         </thead>
         <tbody>
             {% for contract in contracts %}
-                <tr class="hover:bg-gray-100">
-                    <td class="px-4 py-2 border">{{ contract.contract_id }}</td>
-                    <td class="px-4 py-2 border">{{ contract.contract_number }}</td>
-                    <td class="px-4 py-2 border">{{ contract.nit_id }}</td>
-                    <td class="px-4 py-2 border">{{ contract.monthly_value }}</td>
-                    <td class="px-4 py-2 border">{{ contract.start_date }}</td>
-                    <td class="px-4 py-2 border">{{ contract.end_date }}</td>
-                    <td class="px-4 py-2 border">
-                        <span class="px-2 py-1 rounded {{ contract.status.class }}">
-                            {{ contract.status.label }}
-                        </span>
+                <tr>
+                    <td>{{ contract.contract_id }}</td>
+                    <td>{{ contract.nit.nit }}</td>
+                    <td>{{ contract.contract_number }}</td>
+                    <td>{{ contract.start_date }}</td>
+                    <td>{{ contract.end_date }}</td>
+                    <td>{{ contract.monthly_value }}</td>
+                    <td>
+                        <div class="table-actions">
+                            <a href="{% url 'contracts:show_delivery_certificates' contract.contract_id %}">View Certificates</a>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

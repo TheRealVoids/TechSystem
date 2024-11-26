@@ -5,21 +5,80 @@
 {% block title %}
     Home
 {% endblock title %}
-{% block content %}
-    <div class="absolute inset-0 min-h-screen bg-cover bg-center w-full h-full "
-         style="background-image: url('{% static 'images/laptop_at_night_laptop_3.jpg' %}')">
-        <div class="relative flex flex-col items-start justify-center min-h-screen bg-gray-900 bg-opacity-50 text-white w-full h-full p-8">
-            <h2 class="text-4xl font-bold mb-4">Welcome to TechSystem</h2>
-            <p class="text-lg mb-6">Your go-to platform for tech solutions.</p>
-            <p class="text-md mb-6">
-                <!-- Add a link to the login page -->
-                Click on the links above to navigate to the different sections of the application.
-            </p>
-            <a href="{% url 'authentication:login' %}"
-               class="relative inline-block px-4 py-2 text-white rounded-lg hover:text-faf0e6 backdrop-filter backdrop-blur-md"
-               style="background: linear-gradient(270deg, rgba(75, 85, 99, 0.5) 0%, rgba(75, 85, 99, 0) 100%)">
-                Login
-            </a>
+{% block breadcrumb %}
+    <div class="bg-[#dee7e7] p-4 rounded-lg shadow-md mb-4 w-full">
+        <nav class="text-sm text-gray-600">
+            <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a>
         </div>
-    </div>
-{% endblock content %}
+    {% endblock breadcrumb %}
+    {% block content %}
+        {% if request.user.is_authenticated %}
+            <div class="bg-gray-300 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-4">Welcome to TechSystem</h2>
+                <p class="text-lg mb-6">Your go-to platform for managing contracts efficiently.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Accesos Rápidos -->
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-2">User Information</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <strong>Username:</strong> {{ request.user.username }}
+                            </li>
+                            <li>
+                                <strong>Last Login:</strong> {{ request.user.last_login|date:"F j, Y, g:i a" }}
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Estadísticas Relevantes -->
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-2">Statistics</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                Total Contracts: <span class="font-bold">{{ contracts_number }}</span>
+                            </li>
+                            <li>
+                                Active Contracts: <span class="font-bold">{{ active_contracts_count }}</span>
+                            </li>
+                            <li>
+                                Expired Contracts: <span class="font-bold">{{ expired_contracts_count }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Último Contrato -->
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-2">Last Added Contract</h3>
+                        <ul class="space-y-2">
+                            {% if last_contract %}
+                                <li class="border-b border-gray-300 pb-2 mb-2">
+                                    <strong>Contract ID:</strong> {{ last_contract.id }}
+                                    <br />
+                                    <strong>NIT:</strong> {{ last_contract.company_nit }}
+                                    <br />
+                                    <strong>Start Date:</strong> {{ last_contract.start_date|date:"F j, Y" }}
+                                    <br />
+                                    <strong>End Date:</strong> {{ last_contract.end_date|date:"F j, Y" }}
+                                    <br />
+                                    <strong>Contract Number:</strong> {{ last_contract.contract_number }}
+                                </li>
+                            {% else %}
+                                <li>No contracts found.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="absolute inset-0 min-h-screen bg-cover bg-center w-full h-full"
+                 style="background-image: url('{% static 'images/laptop_at_night_laptop_3.jpg' %}')">
+                <div class="relative flex flex-col items-start justify-center min-h-screen bg-gray-900 bg-opacity-50 text-white w-full h-full p-8">
+                    <h2 class="text-4xl font-bold mb-4">Welcome to TechSystem</h2>
+                    <p class="text-lg mb-6">Your go-to platform for tech solutions.</p>
+                    <a href="{% url 'authentication:login' %}?next={{ request.path }}"
+                       class="relative inline-block px-4 py-2 text-white rounded-lg hover:text-faf0e6 backdrop-filter backdrop-blur-md"
+                       style="background: linear-gradient(270deg, rgba(75, 85, 99, 0.5) 0%, rgba(75, 85, 99, 0) 100%)">
+                        Login
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    {% endblock content %}

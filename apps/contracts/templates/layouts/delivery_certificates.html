@@ -4,9 +4,10 @@
     Delivery Certificates
 {% endblock title %}
 {% block content %}
-    <h2>Delivery Certificates</h2>
-    <a href="{% url 'contracts:show_contracts' %}">Back to Contracts</a>
-    <table>
+    <a href="{% url 'contracts:show_contracts' %}"
+       class="inline-block mb-4 px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-300">Back to Contracts</a>
+    <h2 class="text-2xl font-bold mb-4">Delivery Certificates</h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Certificate ID</th>
@@ -24,7 +25,9 @@
                     <td>{{ certificate.delivery_date }}</td>
                     <td>{{ certificate.notes }}</td>
                     <td>
-                        <a href="{% url 'contracts:show_equipments' certificate.certificate_id %}">Show Equipments</a>
+                        <div class="table-actions">
+                            <a href="{% url 'contracts:show_equipments' certificate.certificate_id %}">Show Equipments</a>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

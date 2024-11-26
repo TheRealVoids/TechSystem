@@ -4,8 +4,8 @@
     Opportunities
 {% endblock title %}
 {% block content %}
-    <h2>Opportunities</h2>
-    <table>
+    <h2 class="text-2xl font-bold mb-4">Opportunities</h2>
+    <table class="table">
         <thead>
             <tr>
                 <th>Opportunity ID</th>
@@ -35,8 +35,10 @@
                     <td>{{ opportunity.status }}</td>
                     <td>{{ opportunity.success_probability }}</td>
                     <td>
-                        <a href="{% url 'opportunities:show_opportunity_history' opportunity.opportunity_id %}">View History</a>
-                        <a href="{% url 'opportunities:show_opportunity_services' opportunity.opportunity_id %}">View Services</a>
+                        <div class="table-actions">
+                            <a href="{% url 'opportunities:show_opportunity_history' opportunity.opportunity_id %}">View History</a>
+                            <a href="{% url 'opportunities:show_opportunity_services' opportunity.opportunity_id %}">View Services</a>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
