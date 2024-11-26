@@ -9,7 +9,7 @@ from apps.leases.forms import LeaseRequestForm
 @login_required
 def show_leases(request):
     user_company_nit = request.user.nit.nit
-    leases_list = RentalRequests.objects.filter(customer_nit=user_company_nit)
+    leases_list = RentalRequests.objects.filter()
 
     # Search functionality
     search_query = request.GET.get("search", "")

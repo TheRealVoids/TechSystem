@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import CharField, Q, TextField
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -8,12 +9,27 @@ from apps.common.services.pgadmin.models import Contract, DeliveryCertificate
 
 @csrf_exempt
 def show_contracts(request):
+    query = request.GET.get("query")
     contracts_list = Contract.objects.filter(nit=request.user.nit).order_by(
         "contract_id"
     )
-    paginator = Paginator(contracts_list, 10)
 
+    if query:
+        fields = [
+            field.name
+            for field in Contract._meta.get_fields()
+            if isinstance(field, (CharField, TextField))
+        ]
+
+        query_filter = Q()
+        for field in fields:
+            query_filter |= Q(**{f"{field}__icontains": query})
+
+        contracts_list = contracts_list.filter(query_filter)
+
+    paginator = Paginator(contracts_list, 10)
     page = request.GET.get("page")
+
     try:
         contracts = paginator.page(page)
     except PageNotAnInteger:
