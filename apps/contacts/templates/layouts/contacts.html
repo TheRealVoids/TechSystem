@@ -13,8 +13,11 @@
 {% block content %}
     <div class="bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-4">Contacts</h2>
+        <div class="my-4">
+            <input type="text" id="search-bar" class="form-control mb-3" placeholder="Search contacts">
+        </div>
         <div class="overflow-x-auto">
-            <table class="table">
+            <table class="table" id="contacts-table">
                 <thead>
                     <tr>
                         <th>Contact ID</th>
@@ -29,26 +32,84 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for contact in contacts %}
+                    {% if contacts %}
+                        {% for contact in contacts %}
+                            <tr>
+                                <td>{{ contact.contact_id }}</td>
+                                <td>{{ contact.nit.nit }}</td>
+                                <td>{{ contact.first_name }}</td>
+                                <td>{{ contact.last_name }}</td>
+                                <td>{{ contact.position }}</td>
+                                <td>{{ contact.phone }}</td>
+                                <td>{{ contact.email }}</td>
+                                <td>{{ contact.last_interaction_date }}</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="{% url 'contacts:show_contact_interactions' contact.contact_id %}">Show Interactions</a>
+                                        <a href="{% url 'contacts:show_contact_departments' contact.contact_id %}">Show Departments</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <td>{{ contact.contact_id }}</td>
-                            <td>{{ contact.nit.nit }}</td>
-                            <td>{{ contact.first_name }}</td>
-                            <td>{{ contact.last_name }}</td>
-                            <td>{{ contact.position }}</td>
-                            <td>{{ contact.phone }}</td>
-                            <td>{{ contact.email }}</td>
-                            <td>{{ contact.last_interaction_date }}</td>
-                            <td>
-                                <div class="table-actions">
-                                    <a href="{% url 'contacts:show_contact_interactions' contact.contact_id %}">Show Interactions</a>
-                                    <a href="{% url 'contacts:show_contact_departments' contact.contact_id %}">Show Departments</a>
-                                </div>
-                            </td>
+                            <td colspan="9" class="text-center">No contacts found.</td>
                         </tr>
-                    {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </div>
+        
+        <!-- Controles de paginación -->
+        <div class="pagination mt-4">
+            <nav>
+                <ul class="flex justify-center space-x-2">
+                    {% if contacts.has_previous %}
+                        <li>
+                            <a href="?page=1" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">First</a>
+                        </li>
+                        <li>
+                            <a href="?page={{ contacts.previous_page_number }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Previous</a>
+                        </li>
+                    {% endif %}
+        
+                    {% for num in contacts.paginator.page_range %}
+                        {% if num == contacts.number %}
+                            <li>
+                                <span class="px-3 py-2 border rounded bg-blue-500 text-white">{{ num }}</span>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="?page={{ num }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+        
+                    {% if contacts.has_next %}
+                        <li>
+                            <a href="?page={{ contacts.next_page_number }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Next</a>
+                        </li>
+                        <li>
+                            <a href="?page={{ contacts.paginator.num_pages }}" class="px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300">Last</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>        
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchBar = document.getElementById('search-bar');
+            const tableRows = document.querySelectorAll('#contacts-table tbody tr');
+
+            searchBar.addEventListener('input', function () {
+                const searchTerm = searchBar.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        });
+    </script>
 {% endblock content %}

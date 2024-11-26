@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
 from apps.common.services.pgadmin.models import (
@@ -10,7 +11,16 @@ from apps.common.services.pgadmin.models import (
 
 @login_required
 def show_opportunities(request):
-    opportunities = Opportunity.objects.all()
+    opportunities_list = Opportunity.objects.all().order_by("opportunity_id")
+    paginator = Paginator(opportunities_list, 10)
+
+    page = request.GET.get("page")
+    try:
+        opportunities = paginator.page(page)
+    except PageNotAnInteger:
+        opportunities = paginator.page(1)
+    except EmptyPage:
+        opportunities = paginator.page(paginator.num_pages)
     return render(
         request, "layouts/opportunities.html", {"opportunities": opportunities}
     )
