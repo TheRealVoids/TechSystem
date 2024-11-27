@@ -54,7 +54,9 @@
                                     <li><strong>{{ key|capfirst }}:</strong> {{ value }}</li>
                                 {% endfor %}
                             </ul>
+                            <div class="mt-4"></div>
                         </p>
+                        {% if request.user.is_staff %}
                         <div class="mt-auto mb-4 flex justify-center">
                             <a 
                                 href="{% url 'leases:edit_specific_attributes' lease_id=product.id|stringformat:'s' %}" 
@@ -62,6 +64,7 @@
                                 Edit attributes
                             </a>
                         </div>
+                        {% endif %}
                         <div class="flex justify-center items-center">
                             <button 
                                 type="button" 
