@@ -13,9 +13,9 @@
 {% block content %}
     <div class="bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-4">Opportunities</h2>
-        <form method="get" action="{% url 'opportunities:show_opportunities' %}" class="my-4 d-flex">
-            <input type="text" name="query" id="search-bar" class="form-control me-2" placeholder="Search opportunities">
-            <button type="submit" class="btn btn-primary">Search</button>
+        <form method="get" action="{% url 'opportunities:show_opportunities' %}" class="my-4 flex">
+            <input type="text" name="query" id="search-bar" class="form-control border border-gray-300 rounded-l-lg p-2 flex-grow" placeholder="Search opportunities">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg border border-gray-300">Search</button>
         </form>
         <div class="overflow-x-auto">
             <table class="table" id="opportunities-table" >
