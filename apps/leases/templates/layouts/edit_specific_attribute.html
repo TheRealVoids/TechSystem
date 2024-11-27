@@ -3,6 +3,13 @@
 {% block title %}
   Edit Specific Attributes
 {% endblock title %}
+{% block breadcrumb %}
+  <div class="bg-gray-200 p-4 rounded-lg shadow-md mb-4 w-full">
+    <nav class="text-sm text-gray-600">
+      <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a> / <span>Leases</span> / <span>Add Lease Request</span> / <span>Edit specific attributes</span>
+    </nav>
+  </div>
+{% endblock breadcrumb %}
 {% block content %}
   <style>
     .placeholder-gray-500::placeholder {
@@ -17,16 +24,16 @@
       <div id="attributes-container">
         {% for key, value in specific_attributes.items %}
           <div class="attribute-item mb-4">
-            <input type="text"
+            <input type="input"
                    name="specific_attributes[]"
                    value="{{ key }}"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500"
+                   class="custom-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500"
                    placeholder="Attribute Name"
                    readonly />
-            <input type="text"
+            <input type="input"
                    name="specific_attributes[]"
                    value="{{ value }}"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500"
+                   class="custom-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500"
                    placeholder="Attribute Value" />
             <button type="button"
                     class="remove-attribute bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mt-2">
@@ -36,10 +43,11 @@
         {% endfor %}
       </div>
       <div class="mb-4">
-        <select id="attribute-type" class="form-control">
-          <option value="">Select Attribute Type</option>
+        <select id="attribute-type"
+                class="form-control block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <option value="" class="text-gray-500">Select Attribute Type</option>
           {% for field in available_fields %}
-            <option value="{{ field }}">{{ field|capfirst }}</option>
+            <option value="{{ field }}" class="text-gray-900">{{ field|capfirst }}</option>
           {% endfor %}
         </select>
       </div>
@@ -54,6 +62,22 @@
       </button>
     </form>
   </div>
+  <style>
+    .custom-input {
+        /* Sobrescribe los estilos aquí */
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+    .custom-input:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        border: 1px solid rgba(81, 203, 238, 1);
+        background-color: #f9f9f9; /* Sobrescribe el color de fondo */
+        border-radius: 0; /* Sobrescribe el border-radius */
+    }
+  </style>
   <script>
       document.getElementById('add-attribute').addEventListener('click', function() {
           var attributeType = document.getElementById('attribute-type').value;
@@ -62,29 +86,29 @@
               var div = document.createElement('div');
               div.className = 'attribute-item mb-4';
               div.innerHTML = `
-                  <input type="text" name="specific_attributes[]" value="${attributeType}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500" placeholder="Attribute Name" readonly />
-                  <input type="text" name="specific_attributes[]" value="" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500" placeholder="Attribute Value" />
+                  <input type="text" name="specific_attributes[]" value="${attributeType}" class="custom-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500" placeholder="Attribute Name" readonly />
+                  <input type="text" name="specific_attributes[]" value="" class="custom-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500" placeholder="Attribute Value" />
                   <button type="button" class="remove-attribute bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mt-2">Remove</button>
               `;
               container.appendChild(div);
-  
+
               // Remove the selected option from the dropdown
               var select = document.getElementById('attribute-type');
               select.querySelector(`option[value="${attributeType}"]`).remove();
           }
       });
-  
+
       document.addEventListener('click', function(e) {
           if (e.target && e.target.classList.contains('remove-attribute')) {
               var attributeName = e.target.previousElementSibling.previousElementSibling.value;
               var select = document.getElementById('attribute-type');
-  
+
               // Add the removed attribute back to the dropdown
               var option = document.createElement('option');
               option.value = attributeName;
               option.text = attributeName.charAt(0).toUpperCase() + attributeName.slice(1);
               select.appendChild(option);
-  
+
               e.target.parentElement.remove();
           }
       });
