@@ -76,6 +76,7 @@
               Contracts
             </a>
           </li>
+          {% if request.user.is_staff %}
           <li>
             <a
               href="{% url 'users:show_users' %}"
@@ -84,6 +85,7 @@
               Users
             </a>
           </li>
+          {% endif %}
           <li>
             <a
               href="{% url 'opportunities:show_opportunities' %}"
@@ -92,6 +94,16 @@
               Opportunities
             </a>
           </li>
+          {% if request.user.is_staff %}
+            <li>
+              <a
+                href="{% url 'admin:index' %}"
+                class="hover:text-blue-300 transition"
+              >
+                Admin Panel
+              </a>
+            </li>
+          {% endif %}
           <li>
             <a
               href="{% url 'authentication:logout' %}"

@@ -51,9 +51,9 @@
                     <ul class="space-y-2">
                         {% if last_contract %}
                             <li class="border-b border-gray-300 pb-2 mb-2">
-                                <strong>Contract ID:</strong> {{ last_contract.id }}
+                                <strong>Contract ID:</strong> {{ last_contract.contract_id }}
                                 <br />
-                                <strong>NIT:</strong> {{ last_contract.company_nit }}
+                                <strong>NIT:</strong> {{ last_contract.nit }}
                                 <br />
                                 <strong>Start Date:</strong> {{ last_contract.start_date|date:"F j, Y" }}
                                 <br />
