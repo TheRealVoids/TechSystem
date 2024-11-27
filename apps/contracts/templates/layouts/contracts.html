@@ -11,25 +11,11 @@
     </div>
 {% endblock breadcrumb %}
 {% block content %}
-    <style>
-        .center-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-    </style>
     <div class="bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-4">Contracts</h2>
-        <form method="get"
-              action="{% url 'contracts:show_contracts' %}"
-              class="my-4 d-flex">
-            <input type="text"
-                   name="query"
-                   id="search-bar"
-                   class="form-control me-2"
-                   placeholder="Search contracts" />
-            <button type="submit" class="btn btn-primary">Search</button>
+        <form method="get" action="{% url 'contracts:show_contracts' %}" class="my-4 flex">
+              <input type="text" name="query" id="search-bar" class="form-control border border-gray-300 rounded-l-lg p-2 flex-grow" placeholder="Search contracts">
+              <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg border border-gray-300">Search</button>
         </form>
         <div class="overflow-x-auto">
             <table class="table" id="contracts-table">
@@ -102,11 +88,5 @@
                 </ul>
             </nav>
         </div>
-    </div>
-    <div class="center-button">
-        <button class="btn btn-primary"
-                onclick="window.location.href='/leases/add-lease-request/'">
-            Add Lease
-        </button>
     </div>
 {% endblock content %}
