@@ -58,7 +58,7 @@ def add_lease_request(request):
             product_dict = product.to_mongo().to_dict()
 
             # Check if the product has stock
-            if product_dict.get("common_attributes", {}).get("stock", 0) > 0:
+            if int(product_dict.get("common_attributes", {}).get("stock", 0)) > 0:
                 product_dict["id"] = str(product.id)  # Ensure product.id is a string
                 products_list.append(product_dict)
                 categories_list.append(product_dict.get("category"))
@@ -151,3 +151,34 @@ def show_lease_products(request, lease_id):
         "layouts/lease_products.html",
         {"lease": lease, "products": products_details},
     )
+
+
+@login_required
+def edit_lease(request, lease_id):
+    product = Products.objects.get(id=lease_id)
+    general_attributes = product.common_attributes
+
+    if request.method == "POST":
+        for key in general_attributes.keys():
+            general_attributes[key] = request.POST.get(key, "N/A")
+        product.common_attributes = general_attributes
+        product.save()
+        return redirect("leases:show_leases")
+
+    return render(
+        request,
+        "layouts/edit_lease.html",
+        {"lease_id": lease_id, "general_attributes": general_attributes},
+    )
+
+
+@login_required
+def save_edit_lease(request, lease_id):
+    lease = get_object_or_404(RentalRequests, id=lease_id)
+    form = LeaseRequestForm(request.POST, instance=lease)
+
+    if form.is_valid():
+        form.save()
+        return redirect("show_leases")
+
+    return render(request, "layouts/edit_lease.html", {"form": form, "lease": lease})

@@ -22,4 +22,6 @@ urlpatterns = [
         views.show_lease_products,
         name="show_lease_products",
     ),
+    path("<str:lease_id>/edit-lease/", views.edit_lease, name="edit_lease"),
+    path("<str:lease_id>/save-edit/", views.save_edit_lease, name="save_edit_lease"),
 ]

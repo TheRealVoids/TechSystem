@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Edit General Attributes
+{% endblock title %}
+{% block breadcrumb %}
+  <div class="bg-gray-200 p-4 rounded-lg shadow-md mb-4 w-full">
+    <nav class="text-sm text-gray-600">
+      <a href="{% url 'index' %}" class="hover:text-gray-800">Home</a> / <span>Leases</span> / <span>Edit General Attributes</span>
+    </nav>
+  </div>
+{% endblock breadcrumb %}
+{% block content %}
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold mb-4">Edit General Attributes</h2>
+    <form method="post" action="{% url 'leases:edit_lease' lease_id %}">
+      {% csrf_token %}
+      <div id="attributes-container">
+        {% for key, value in general_attributes.items %}
+          <div class="attribute-item mb-4">
+            <label for="{{ key }}" class="block text-sm font-medium text-gray-700">
+              {{ key|capfirst }}
+            </label>
+            <input type="input"
+                   name="{{ key }}"
+                   value="{{ value }}"
+                   class="custom-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 bg-white leading-tight focus:outline-none focus:shadow-outline placeholder-gray-500"
+                   placeholder="Enter value or N/A" />
+          </div>
+        {% endfor %}
+      </div>
+      <button type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+        Save
+      </button>
+    </form>
+  </div>
+  <style>
+    .custom-input {
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+    .custom-input:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        border: 1px solid rgba(81, 203, 238, 1);
+        background-color: #f9f9f9;
+        border-radius: 0;
+    }
+  </style>
+{% endblock content %}

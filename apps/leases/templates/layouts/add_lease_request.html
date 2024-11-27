@@ -14,14 +14,12 @@
     <h2 class="text-xl font-bold mb-4">Available Products</h2>
     <div class="container mx-auto my-4 space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input 
-                type="text" 
-                id="search-bar" 
-                class="border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 w-full" 
-                placeholder="Search by product name or brand" />
-            <select 
-                id="category-filter" 
-                class="border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 w-full">
+            <input type="text"
+                   id="search-bar"
+                   class="border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 w-full"
+                   placeholder="Search by product name or brand" />
+            <select id="category-filter"
+                    class="border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 w-full">
                 <option value="">All Categories</option>
                 {% for category in categories %}
                     <option value="{{ category }}">{{ category }}</option>
@@ -32,51 +30,56 @@
             {% for product in products %}
                 <div class="bg-white shadow-lg rounded-lg flex flex-col h-full border border-gray-200">
                     <div class="overflow-hidden h-44 flex justify-center items-center p-1">
-                        <img 
-                            src="{{ product.image_url }}" 
-                            alt="{{ product.common_attributes.brand }} {{ product.common_attributes.model }}" 
-                            class="object-contain h-full w-full"
-                            width="100"
-                            height="100"/>
+                        <img src="{{ product.image_url }}"
+                             alt="{{ product.common_attributes.brand }} {{ product.common_attributes.model }}"
+                             class="object-contain h-full w-full"
+                             width="100"
+                             height="100" />
                     </div>
                     <div class="p-4 flex flex-col flex-grow">
                         <h5 class="text-lg font-semibold">
                             {{ product.common_attributes.brand }} {{ product.common_attributes.model }}
                         </h5>
                         <p class="text-sm text-gray-700 mb-4">
-                            <strong>Category:</strong> {{ product.category }}<br />
-                            <strong>Price:</strong> ${{ product.common_attributes.price }}<br />
-                            <strong>Stock:</strong> {{ product.common_attributes.stock }}<br />
-                            <strong>Warranty:</strong> {{ product.common_attributes.warranty_period }}<br />
+                            <strong>Category:</strong> {{ product.category }}
+                            <br />
+                            <strong>Price:</strong> ${{ product.common_attributes.price }}
+                            <br />
+                            <strong>Stock:</strong> {{ product.common_attributes.stock }}
+                            <br />
+                            <strong>Warranty:</strong> {{ product.common_attributes.warranty_period }}
+                            <br />
                             <h5>Specific Attributes:</h5>
                             <ul class="list-disc list-inside">
                                 {% for key, value in product.specific_attributes.items %}
-                                    <li><strong>{{ key|capfirst }}:</strong> {{ value }}</li>
+                                    <li>
+                                        <strong>{{ key|capfirst }}:</strong> {{ value }}
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </p>
-                        <div class="mt-auto mb-4 flex justify-center">
-                            <a 
-                                href="{% url 'leases:edit_specific_attributes' lease_id=product.id|stringformat:'s' %}" 
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Edit attributes
+                        <div class="mt-auto mb-4 flex flex-col items-center space-y-2">
+                            <a href="{% url 'leases:edit_lease' lease_id=product.id|stringformat:'s' %}"
+                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Edit general attributes
+                            </a>
+                            <a href="{% url 'leases:edit_specific_attributes' lease_id=product.id|stringformat:'s' %}"
+                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Edit specific attributes
                             </a>
                         </div>
                         <div class="flex justify-center items-center">
-                            <button 
-                                type="button" 
-                                class="border border-gray-300 rounded-l-lg w-10 h-10 bg-gray-200 hover:bg-gray-300" 
-                                onclick="decreaseQuantity(this)">-</button>
-                            <input 
-                                type="number" 
-                                value="0" 
-                                min="0" 
-                                max="{{ product.common_attributes.stock }}" 
-                                class="w-16 h-10 text-center border-t border-b border-gray-300">
-                            <button 
-                                type="button" 
-                                class="border border-gray-300 rounded-r-lg w-10 h-10 bg-gray-200 hover:bg-gray-300" 
-                                onclick="increaseQuantity(this)">+</button>
+                            <button type="button"
+                                    class="border border-gray-300 rounded-l-lg w-10 h-10 bg-gray-200 hover:bg-gray-300"
+                                    onclick="decreaseQuantity(this)">-</button>
+                            <input type="number"
+                                   value="0"
+                                   min="0"
+                                   max="{{ product.common_attributes.stock }}"
+                                   class="w-16 h-10 text-center border-t border-b border-gray-300" />
+                            <button type="button"
+                                    class="border border-gray-300 rounded-r-lg w-10 h-10 bg-gray-200 hover:bg-gray-300"
+                                    onclick="increaseQuantity(this)">+</button>
                         </div>
                     </div>
                 </div>
@@ -85,16 +88,17 @@
         <form method="post" class="mt-6">
             {% csrf_token %}
             <div class="mt-4">
-                <label for="additional-notes" class="block text-lg font-family text-gray-700">Additional Notes:</label>
-                <textarea 
-                    id="additional-notes" 
-                    name="additional_notes" 
-                    rows="4" 
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300"></textarea>
+                <label for="additional-notes"
+                       class="block text-lg font-family text-gray-700">
+                    Additional Notes:
+                </label>
+                <textarea id="additional-notes"
+                          name="additional_notes"
+                          rows="4"
+                          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300"></textarea>
             </div>
-            <button 
-                type="submit" 
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
                 Submit Request
             </button>
         </form>
