@@ -7,6 +7,7 @@ from django.urls import reverse
 from apps.common.services.mongodb.models import (
     Products,
     RentalRequests,
+    RequestedEquipments,
     SpecificAttributes,
 )
 from apps.leases.forms import LeaseRequestForm
@@ -40,26 +41,38 @@ def show_leases(request):
 @login_required
 def add_lease_request(request):
     if request.method == "POST":
-        # Program this part
+        additional_notes = request.POST.get("additional_notes", "")
+        requested_equipments = []
 
-        return redirect("show_leases")  # Redirect to the leases view
+        # Process each product in the POST request
+        for key, value in request.POST.items():
+            if key.startswith("product-") and int(value) > 0:
+                product_id = key.split("-")[1]
+                quantity = int(value)
+                requested_equipments.append(
+                    RequestedEquipments(product_id=product_id, quantity=quantity)
+                )
+
+        # Create a new rental request
+        rental_request = RentalRequests(
+            customer_nit=request.user.nit.nit,
+            requested_equipment=requested_equipments,
+            status="pending",
+        )
+        rental_request.save()
+
+        return redirect("leases:show_leases")
     else:
         form = LeaseRequestForm()
 
-    # Get products to display them as cards
     products = Products.objects.all()
-
-    # Convert specific_attributes to a dictionary
     products_list = []
     categories_list = []
     for product in products:
         if product:
-            # Convert the product to a dictionary
             product_dict = product.to_mongo().to_dict()
-
-            # Check if the product has stock
             if int(product_dict.get("common_attributes", {}).get("stock", 0)) > 0:
-                product_dict["id"] = str(product.id)  # Ensure product.id is a string
+                product_dict["id"] = str(product.id)
                 products_list.append(product_dict)
                 categories_list.append(product_dict.get("category"))
             else:

@@ -21,23 +21,31 @@
     </style>
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold">Leases</h2>
-        <button 
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-            onclick="window.location.href='/leases/add-lease-request/'">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onclick="window.location.href='/leases/add-lease-request/'">
             Add Lease
         </button>
     </div>
     <div class="my-4">
-        <form method="get" action="{% url 'leases:show_leases' %}" class="my-4 flex">
-              <input type="text" name="query" id="search-bar" class="form-control border border-gray-300 rounded-l-lg p-2 flex-grow" placeholder="Search leases">
-              <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg border border-gray-300">Search</button>
+        <form method="get"
+              action="{% url 'leases:show_leases' %}"
+              class="my-4 flex">
+            <input type="text"
+                   name="query"
+                   id="search-bar"
+                   class="form-control border border-gray-300 rounded-l-lg p-2 flex-grow"
+                   placeholder="Search leases" />
+            <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg border border-gray-300">
+                Search
+            </button>
         </form>
     </div>
     <table class="table" id="leases-table">
         <thead>
             <tr>
                 <th>Customer NIT</th>
-                <th>Request Date</th>
+                <th>Request Date (UTC)</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
