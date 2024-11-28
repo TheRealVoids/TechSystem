@@ -68,7 +68,7 @@ def add_lease_request(request):
 
     products = Products.objects.all()
     products_list = []
-    categories_list = []
+    categories_list = [category.category_name for category in Category.objects.all()]
     for product in products:
         if product:
             product_dict = product.to_mongo().to_dict()
@@ -80,7 +80,6 @@ def add_lease_request(request):
                 ).category_name
                 product_dict["category"] = category_name
                 products_list.append(product_dict)
-                categories_list.append(category_name)
             else:
                 print(
                     f"Product {product_dict.get('common_attributes', {}).get('brand', '')} {product_dict.get('common_attributes', {}).get('model', '')} out of stock"
