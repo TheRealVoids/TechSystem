@@ -5,8 +5,9 @@ from apps.common.services.pgadmin.models import UserAccount
 
 from .backends import UserAccountBackend
 from .forms import LoginForm
+from django.views.decorators.csrf import csrf_exempt
 
-
+@csrf_exempt
 def login_view(request):
     if request.method == "POST":
         form = LoginForm(request.POST)

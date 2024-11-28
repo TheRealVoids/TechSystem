@@ -12,8 +12,9 @@ from apps.common.services.mongodb.models import (
 )
 from apps.common.services.pgadmin.models import Category, CategorySpecificAttribute
 from apps.leases.forms import LeaseRequestForm
+from django.views.decorators.csrf import csrf_exempt
 
-
+@csrf_exempt
 @login_required
 def show_leases(request):
     user_company_nit = request.user.nit.nit
@@ -39,6 +40,7 @@ def show_leases(request):
     )
 
 
+@csrf_exempt
 @login_required
 def add_lease_request(request):
     if request.method == "POST":
@@ -138,6 +140,7 @@ def edit_specific_attributes(request, lease_id):
     )
 
 
+@csrf_exempt
 @login_required
 def save_specific_attributes(request, lease_id):
     if request.method == "POST":
@@ -177,6 +180,7 @@ def show_lease_products(request, lease_id):
     )
 
 
+@csrf_exempt
 @login_required
 def edit_lease(request, lease_id):
     product = Products.objects.get(id=lease_id)
