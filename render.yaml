@@ -1,3 +1,0 @@
-static:
-  - path: /static
-    source: staticfiles
