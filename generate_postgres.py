@@ -8,6 +8,7 @@ django.setup()
 
 from apps.common.services.pgadmin.models import (
     Category,
+    CategorySpecificAttribute,
     Company,
     Contact,
     ContactDepartment,
@@ -22,6 +23,7 @@ from apps.common.services.pgadmin.models import (
     OpportunityStageHistory,
     ProductService,
     Role,
+    SpecificAttribute,
     UserAccount,
     UserRole,
 )
@@ -47,6 +49,8 @@ def reset_database():
         Company,
         Interaction,
         Category,
+        CategorySpecificAttribute,
+        SpecificAttribute,
     ]
     for model in models:
         model.objects.all().delete()
@@ -733,6 +737,8 @@ def populate_database():
             "username": "john_doe",
             "email": "jdoe@techinnovations.com",
             "password": "default_password",
+            "is_staff": True,
+            "is_superuser": True,
         },
         {
             "user_id": "U2",
@@ -911,6 +917,8 @@ def populate_database():
             user_id=user_data["user_id"],
             nit=user_data["nit"],
             email=user_data["email"],
+            is_staff=user_data.get("is_staff", False),
+            is_superuser=user_data.get("is_superuser", False),
         )
         user.save()
         user_accounts.append(user)
@@ -1427,6 +1435,21 @@ def populate_database():
             category_name="Monitors",
             description="Various brands of monitors",
         ),
+        Category(
+            category_id="CAT4",
+            category_name="Printers",
+            description="Various brands of printers",
+        ),
+        Category(
+            category_id="CAT5",
+            category_name="Tablets",
+            description="Various brands of tablets",
+        ),
+        Category(
+            category_id="CAT6",
+            category_name="Mobile Phones",
+            description="Various brands of mobile phones",
+        ),
     ]
     Category.objects.bulk_create(categories)
 
@@ -1614,6 +1637,154 @@ def populate_database():
     Equipment.objects.bulk_create(equipment)
 
     print("Inserted EquipmentData data...")
+
+    # Insert data into SpecificAttribute
+    specific_attributes = [
+        SpecificAttribute(
+            attribute_id="A1",
+            attribute_name="processor",
+            description="Processor type and speed",
+        ),
+        SpecificAttribute(
+            attribute_id="A2",
+            attribute_name="ram",
+            description="Amount of RAM",
+        ),
+        SpecificAttribute(
+            attribute_id="A3",
+            attribute_name="storage",
+            description="Storage capacity",
+        ),
+        SpecificAttribute(
+            attribute_id="A4",
+            attribute_name="graphics_card",
+            description="Graphics card model",
+        ),
+        SpecificAttribute(
+            attribute_id="A5",
+            attribute_name="operating_system",
+            description="Operating system",
+        ),
+        SpecificAttribute(
+            attribute_id="A6",
+            attribute_name="screen_size",
+            description="Screen size",
+        ),
+        SpecificAttribute(
+            attribute_id="A7",
+            attribute_name="battery_life",
+            description="Battery life",
+        ),
+        SpecificAttribute(
+            attribute_id="A8",
+            attribute_name="camera_resolution",
+            description="Camera resolution",
+        ),
+        SpecificAttribute(
+            attribute_id="A9",
+            attribute_name="printing_technology",
+            description="Printing technology used",
+        ),
+        SpecificAttribute(
+            attribute_id="A10",
+            attribute_name="connectivity_options",
+            description="Connectivity options available",
+        ),
+    ]
+    SpecificAttribute.objects.bulk_create(specific_attributes)
+
+    print("Inserted SpecificAttribute data...")
+
+    # Insert data into CategorySpecificAttribute
+    category_specific_attributes = [
+        CategorySpecificAttribute(
+            category_id=categories[0],  # Laptops
+            attribute_id=specific_attributes[0],  # processor
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[0],  # Laptops
+            attribute_id=specific_attributes[1],  # ram
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[0],  # Laptops
+            attribute_id=specific_attributes[2],  # storage
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[0],  # Laptops
+            attribute_id=specific_attributes[3],  # graphics_card
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[0],  # Laptops
+            attribute_id=specific_attributes[4],  # operating_system
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[1],  # Desktops
+            attribute_id=specific_attributes[0],  # processor
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[1],  # Desktops
+            attribute_id=specific_attributes[1],  # ram
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[1],  # Desktops
+            attribute_id=specific_attributes[2],  # storage
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[1],  # Desktops
+            attribute_id=specific_attributes[3],  # graphics_card
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[1],  # Desktops
+            attribute_id=specific_attributes[4],  # operating_system
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[2],  # Monitors
+            attribute_id=specific_attributes[5],  # screen_size
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[3],  # Printers
+            attribute_id=specific_attributes[8],  # printing_technology
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[3],  # Printers
+            attribute_id=specific_attributes[9],  # connectivity_options
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[4],  # Tablets
+            attribute_id=specific_attributes[5],  # screen_size
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[4],  # Tablets
+            attribute_id=specific_attributes[6],  # battery_life
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[4],  # Tablets
+            attribute_id=specific_attributes[7],  # camera_resolution
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[4],  # Tablets
+            attribute_id=specific_attributes[4],  # operating_system
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[5],  # Mobile Phones
+            attribute_id=specific_attributes[5],  # screen_size
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[5],  # Mobile Phones
+            attribute_id=specific_attributes[6],  # battery_life
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[5],  # Mobile Phones
+            attribute_id=specific_attributes[7],  # camera_resolution
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[5],  # Mobile Phones
+            attribute_id=specific_attributes[4],  # operating_system
+        ),
+    ]
+    CategorySpecificAttribute.objects.bulk_create(category_specific_attributes)
+
+    print("Inserted CategorySpecificAttribute data...")
 
 
 if __name__ == "__main__":

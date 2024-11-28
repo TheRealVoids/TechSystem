@@ -198,3 +198,17 @@ class Equipment(models.Model):
     category_id = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True
     )
+
+
+class SpecificAttribute(models.Model):
+    attribute_id = models.CharField(max_length=20, primary_key=True)
+    attribute_name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+
+
+class CategorySpecificAttribute(models.Model):
+    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    attribute_id = models.ForeignKey(SpecificAttribute, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ("category_id", "attribute_id")
