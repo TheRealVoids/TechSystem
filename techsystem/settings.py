@@ -177,7 +177,10 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    'https://techsystem.onrender.com',
+]
+
 CSRF_COOKIE_SECURE = False
 CSRF_USE_SESSIONS = False
 
