@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Category,
+    CategorySpecificAttribute,
     Company,
     Contact,
     ContactDepartment,
@@ -16,6 +17,7 @@ from .models import (
     OpportunityStageHistory,
     ProductService,
     Role,
+    SpecificAttribute,
     UserAccount,
     UserRole,
 )
@@ -89,6 +91,14 @@ class EquipmentAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Equipment._meta.fields]
 
 
+class SpecificAttributeAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in SpecificAttribute._meta.fields]
+
+
+class CategorySpecificAttributeAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in CategorySpecificAttribute._meta.fields]
+
+
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Department, DepartmentAdmin)
@@ -106,3 +116,5 @@ admin.site.register(Contract, ContractAdmin)
 admin.site.register(DeliveryCertificate, DeliveryCertificateAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Equipment, EquipmentAdmin)
+admin.site.register(SpecificAttribute, SpecificAttributeAdmin)
+admin.site.register(CategorySpecificAttribute, CategorySpecificAttributeAdmin)

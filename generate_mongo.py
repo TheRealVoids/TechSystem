@@ -19,9 +19,18 @@ def reset_database():
 
 
 def insert_data():
+    # Define category IDs consistent with generate_postgres.py
+    categories = {
+        "Laptops": "CAT1",
+        "Desktops": "CAT2",
+        "Monitors": "CAT3",
+        "Printers": "CAT4",
+        "Tablets": "CAT5",
+        "Mobile Phones": "CAT6",
+    }
 
     Products.objects.create(
-        category="Laptop",
+        category=categories["Laptops"],
         common_attributes={
             "brand": "Dell",
             "model": "XPS 15",
@@ -41,7 +50,7 @@ def insert_data():
     )
 
     Products.objects.create(
-        category="Printer",
+        category=categories["Printers"],
         common_attributes={
             "brand": "Canon",
             "model": "Pixma G6020",
@@ -58,7 +67,7 @@ def insert_data():
     )
 
     Products.objects.create(
-        category="Tablet",
+        category=categories["Tablets"],
         common_attributes={
             "brand": "Samsung",
             "model": "Galaxy Tab S8",
@@ -77,7 +86,7 @@ def insert_data():
     )
 
     Products.objects.create(
-        category="Smartphone",
+        category=categories["Mobile Phones"],
         common_attributes={
             "brand": "Apple",
             "model": "iPhone 14 Pro",

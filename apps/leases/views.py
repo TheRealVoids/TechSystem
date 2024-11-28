@@ -10,6 +10,7 @@ from apps.common.services.mongodb.models import (
     RequestedEquipments,
     SpecificAttributes,
 )
+from apps.common.services.pgadmin.models import Category, CategorySpecificAttribute
 from apps.leases.forms import LeaseRequestForm
 
 
@@ -73,8 +74,13 @@ def add_lease_request(request):
             product_dict = product.to_mongo().to_dict()
             if int(product_dict.get("common_attributes", {}).get("stock", 0)) > 0:
                 product_dict["id"] = str(product.id)
+                category_id = product_dict.get("category")
+                category_name = Category.objects.get(
+                    category_id=category_id
+                ).category_name
+                product_dict["category"] = category_name
                 products_list.append(product_dict)
-                categories_list.append(product_dict.get("category"))
+                categories_list.append(category_name)
             else:
                 print(
                     f"Product {product_dict.get('common_attributes', {}).get('brand', '')} {product_dict.get('common_attributes', {}).get('model', '')} out of stock"
@@ -95,24 +101,31 @@ def edit_specific_attributes(request, lease_id):
         product = Products.objects.get(id=lease_id)
         specific_attributes = product.specific_attributes
 
-        # Convertir specific_attributes a un diccionario si es necesario
+        # Convert specific_attributes to a dictionary if necessary
         if hasattr(specific_attributes, "to_mongo"):
             specific_attributes = specific_attributes.to_mongo().to_dict()
         else:
             specific_attributes = vars(specific_attributes)
 
-        # Obtener los campos del modelo SpecificAttributes
-        specific_attributes_fields = SpecificAttributes._fields.keys()
-
-        # Filtrar los campos que ya están presentes en specific_attributes
+        # Get the fields of the SpecificAttributes model
+        available_fields = SpecificAttributes._fields.keys()
+        # Filter the fields that are already present in specific_attributes
         available_fields = [
-            field
-            for field in specific_attributes_fields
-            if field not in specific_attributes
+            field for field in available_fields if field not in specific_attributes
+        ]
+
+        # Filter the fields that are already present in specific_attributes
+
+        # Filter available fields based on the product category
+        category_specific_attributes = CategorySpecificAttribute.objects.filter(
+            category_id_id=product.category
+        ).values_list("attribute_id__attribute_name", flat=True)
+        available_fields = [
+            field for field in available_fields if field in category_specific_attributes
         ]
 
     except Products.DoesNotExist:
-        return redirect("show_leases")
+        return redirect("leases:show_leases")
 
     return render(
         request,
@@ -142,8 +155,7 @@ def save_specific_attributes(request, lease_id):
         product.specific_attributes = specific_attributes_instance
         product.save()
 
-        next_url = request.POST.get("next", reverse("index"))
-        return redirect(next_url)
+        return redirect("leases:add_lease_request")
     else:
         return render(
             request, "layouts/edit_specific_attribute.html", {"lease_id": lease_id}
