@@ -27,6 +27,8 @@ def insert_data():
         "Printers": "CAT4",
         "Tablets": "CAT5",
         "Mobile Phones": "CAT6",
+        "Cameras": "CAT7",
+        "Headphones": "CAT8",
     }
 
     Products.objects.create(
@@ -102,6 +104,191 @@ def insert_data():
             "operating_system": "iOS",
         },
         image_url="https://mvdstore.uy/wp-content/uploads/2022/09/Apple-iPhone-14-Pro-iPhone.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Cameras"],
+        common_attributes={
+            "brand": "Canon",
+            "model": "EOS R5",
+            "price": 3500.00,
+            "stock": 15,
+            "warranty_period": "1 year",
+            "release_date": "2021-07-30",
+        },
+        specific_attributes={
+            "resolution": "45 MP",
+            "sensor_size": "Full Frame",
+            "video_resolution": "8K",
+        },
+        image_url="https://example.com/canon_eos_r5.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Headphones"],
+        common_attributes={
+            "brand": "Sony",
+            "model": "WH-1000XM4",
+            "price": 350.00,
+            "stock": 50,
+            "warranty_period": "1 year",
+            "release_date": "2020-08-06",
+        },
+        specific_attributes={
+            "noise_cancellation": "Active",
+            "battery_life": "30 hours",
+            "connectivity_options": "Bluetooth 5.0",
+        },
+        image_url="https://example.com/sony_wh_1000xm4.jpg",
+    )
+
+    # Additional products
+    Products.objects.create(
+        category=categories["Laptops"],
+        common_attributes={
+            "brand": "HP",
+            "model": "Spectre x360",
+            "price": 1400.00,
+            "stock": 15,
+            "warranty_period": "2 years",
+            "release_date": "2021-10-01",
+        },
+        specific_attributes={
+            "processor": "Intel Core i7",
+            "ram": "16 GB",
+            "storage": "1 TB SSD",
+            "graphics_card": "Intel Iris Xe",
+            "operating_system": "Windows 10",
+        },
+        image_url="https://example.com/hp_spectre_x360.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Desktops"],
+        common_attributes={
+            "brand": "Apple",
+            "model": "iMac 24-inch",
+            "price": 1800.00,
+            "stock": 10,
+            "warranty_period": "1 year",
+            "release_date": "2021-05-21",
+        },
+        specific_attributes={
+            "processor": "Apple M1",
+            "ram": "8 GB",
+            "storage": "256 GB SSD",
+            "graphics_card": "Integrated",
+            "operating_system": "macOS",
+        },
+        image_url="https://example.com/apple_imac_24.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Monitors"],
+        common_attributes={
+            "brand": "LG",
+            "model": "UltraFine 5K",
+            "price": 1300.00,
+            "stock": 20,
+            "warranty_period": "1 year",
+            "release_date": "2020-11-15",
+        },
+        specific_attributes={
+            "screen_size": "27 inches",
+            "resolution": "5120 x 2880",
+        },
+        image_url="https://example.com/lg_ultrafine_5k.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Printers"],
+        common_attributes={
+            "brand": "HP",
+            "model": "LaserJet Pro MFP",
+            "price": 400.00,
+            "stock": 30,
+            "warranty_period": "1 year",
+            "release_date": "2021-02-10",
+        },
+        specific_attributes={
+            "printing_technology": "Laser",
+            "connectivity_options": "Wi-Fi, Ethernet, USB",
+        },
+        image_url="https://example.com/hp_laserjet_pro.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Tablets"],
+        common_attributes={
+            "brand": "Apple",
+            "model": "iPad Pro",
+            "price": 1000.00,
+            "stock": 25,
+            "warranty_period": "1 year",
+            "release_date": "2021-04-30",
+        },
+        specific_attributes={
+            "screen_size": "12.9 inches",
+            "battery_life": "10 hours",
+            "camera_resolution": "12 MP",
+            "operating_system": "iPadOS",
+        },
+        image_url="https://example.com/apple_ipad_pro.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Mobile Phones"],
+        common_attributes={
+            "brand": "Samsung",
+            "model": "Galaxy S21",
+            "price": 999.00,
+            "stock": 40,
+            "warranty_period": "1 year",
+            "release_date": "2021-01-29",
+        },
+        specific_attributes={
+            "screen_size": "6.2 inches",
+            "battery_life": "18 hours",
+            "camera_resolution": "64 MP",
+            "operating_system": "Android",
+        },
+        image_url="https://example.com/samsung_galaxy_s21.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Cameras"],
+        common_attributes={
+            "brand": "Nikon",
+            "model": "Z6 II",
+            "price": 2000.00,
+            "stock": 20,
+            "warranty_period": "1 year",
+            "release_date": "2020-10-14",
+        },
+        specific_attributes={
+            "resolution": "24.5 MP",
+            "sensor_size": "Full Frame",
+            "video_resolution": "4K",
+        },
+        image_url="https://example.com/nikon_z6_ii.jpg",
+    )
+
+    Products.objects.create(
+        category=categories["Headphones"],
+        common_attributes={
+            "brand": "Bose",
+            "model": "QuietComfort 35 II",
+            "price": 300.00,
+            "stock": 35,
+            "warranty_period": "1 year",
+            "release_date": "2019-09-05",
+        },
+        specific_attributes={
+            "noise_cancellation": "Active",
+            "battery_life": "20 hours",
+            "connectivity_options": "Bluetooth 4.1",
+        },
+        image_url="https://example.com/bose_qc35_ii.jpg",
     )
 
     print("Inserted Products data...")

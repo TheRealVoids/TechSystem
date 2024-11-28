@@ -1450,6 +1450,16 @@ def populate_database():
             category_name="Mobile Phones",
             description="Various brands of mobile phones",
         ),
+        Category(
+            category_id="CAT7",
+            category_name="Cameras",
+            description="Various brands of cameras",
+        ),
+        Category(
+            category_id="CAT8",
+            category_name="Headphones",
+            description="Various brands of headphones",
+        ),
     ]
     Category.objects.bulk_create(categories)
 
@@ -1690,6 +1700,26 @@ def populate_database():
             attribute_name="connectivity_options",
             description="Connectivity options available",
         ),
+        SpecificAttribute(
+            attribute_id="A11",
+            attribute_name="resolution",
+            description="Resolution of the camera",
+        ),
+        SpecificAttribute(
+            attribute_id="A12",
+            attribute_name="sensor_size",
+            description="Size of the camera sensor",
+        ),
+        SpecificAttribute(
+            attribute_id="A13",
+            attribute_name="video_resolution",
+            description="Video resolution capability",
+        ),
+        SpecificAttribute(
+            attribute_id="A14",
+            attribute_name="noise_cancellation",
+            description="Noise cancellation type",
+        ),
     ]
     SpecificAttribute.objects.bulk_create(specific_attributes)
 
@@ -1780,6 +1810,30 @@ def populate_database():
         CategorySpecificAttribute(
             category_id=categories[5],  # Mobile Phones
             attribute_id=specific_attributes[4],  # operating_system
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[6],  # Cameras
+            attribute_id=specific_attributes[10],  # resolution
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[6],  # Cameras
+            attribute_id=specific_attributes[11],  # sensor_size
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[6],  # Cameras
+            attribute_id=specific_attributes[12],  # video_resolution
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[7],  # Headphones
+            attribute_id=specific_attributes[13],  # noise_cancellation
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[7],  # Headphones
+            attribute_id=specific_attributes[6],  # battery_life
+        ),
+        CategorySpecificAttribute(
+            category_id=categories[7],  # Headphones
+            attribute_id=specific_attributes[9],  # connectivity_options
         ),
     ]
     CategorySpecificAttribute.objects.bulk_create(category_specific_attributes)

@@ -31,6 +31,16 @@ class SpecificAttributes(EmbeddedDocument):
     battery_life = StringField(max_length=50)
     camera_resolution = StringField(max_length=50)
 
+    # Attributes for cameras
+    resolution = StringField(max_length=50)
+    sensor_size = StringField(max_length=50)
+    video_resolution = StringField(max_length=50)
+
+    # Attributes for headphones
+    noise_cancellation = StringField(max_length=50)
+    connectivity_options = StringField(max_length=100)
+    battery_life = StringField(max_length=50)
+
 
 class Products(Document):
     category = StringField(max_length=50, required=True)  # e.g., 'Laptop', 'Printer'
