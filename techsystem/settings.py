@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-4_%4*y&2r#vfcw$%l3rx0a)k#qacf&$=@g#@=p2dd4^+!&=a(^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['techsystem.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -60,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = "techsystem.urls"
@@ -166,7 +167,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-COMPRESS_ROOT = BASE_DIR / "static"
+COMPRESS_ROOT = BASE_DIR / "staticfiles"
 
 COMPRESS_ENABLED = True
 
