@@ -121,7 +121,7 @@ def insert_data():
             "sensor_size": "Full Frame",
             "video_resolution": "8K",
         },
-        image_url="https://example.com/canon_eos_r5.jpg",
+        image_url="https://i1.adis.ws/i/canon/4147C025_EOS-R5_Position-1_02/product-front-view-with-lens?w=1500&bg=gray95",
     )
 
     Products.objects.create(
@@ -139,7 +139,7 @@ def insert_data():
             "battery_life": "30 hours",
             "connectivity_options": "Bluetooth 5.0",
         },
-        image_url="https://example.com/sony_wh_1000xm4.jpg",
+        image_url="https://mspoweruser.com/wp-content/uploads/2020/08/Sony-WH-1000XM4.jpg",
     )
 
     # Additional products
@@ -160,7 +160,7 @@ def insert_data():
             "graphics_card": "Intel Iris Xe",
             "operating_system": "Windows 10",
         },
-        image_url="https://example.com/hp_spectre_x360.jpg",
+        image_url="https://th.bing.com/th/id/OIP.1UkP3s33jysdodsBnjiMHgHaFj?w=215&h=180&c=7&r=0&o=5&dpr=1.1&pid=1.7",
     )
 
     Products.objects.create(
@@ -180,7 +180,7 @@ def insert_data():
             "graphics_card": "Integrated",
             "operating_system": "macOS",
         },
-        image_url="https://example.com/apple_imac_24.jpg",
+        image_url="https://res.cloudinary.com/aeropost-inc/image/upload/live/PG59J0/PG59J03e1a-16844101428180-0",
     )
 
     Products.objects.create(
@@ -197,7 +197,7 @@ def insert_data():
             "screen_size": "27 inches",
             "resolution": "5120 x 2880",
         },
-        image_url="https://example.com/lg_ultrafine_5k.jpg",
+        image_url="https://cdn.wccftech.com/wp-content/uploads/2016/12/LG-UltraFine-5K-1.jpg",
     )
 
     Products.objects.create(
@@ -214,7 +214,7 @@ def insert_data():
             "printing_technology": "Laser",
             "connectivity_options": "Wi-Fi, Ethernet, USB",
         },
-        image_url="https://example.com/hp_laserjet_pro.jpg",
+        image_url="https://www.bhphotovideo.com/images/images2500x2500/hp_2z619f_laserjet_pro_mfp_4101fdw_1716842.jpg",
     )
 
     Products.objects.create(
@@ -233,7 +233,7 @@ def insert_data():
             "camera_resolution": "12 MP",
             "operating_system": "iPadOS",
         },
-        image_url="https://example.com/apple_ipad_pro.jpg",
+        image_url="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/refurb-ipad-pro-11-wifi-silver-2019?wid=1144&hei=1144&fmt=jpeg&qlt=80&op_usm=0.5,0.5&.v=1581985473264",
     )
 
     Products.objects.create(
@@ -252,7 +252,7 @@ def insert_data():
             "camera_resolution": "64 MP",
             "operating_system": "Android",
         },
-        image_url="https://example.com/samsung_galaxy_s21.jpg",
+        image_url="https://th.bing.com/th/id/OIP.Ojv_cKQXK-TCohfc51cEdgHaHa?rs=1&pid=ImgDetMain",
     )
 
     Products.objects.create(
@@ -270,7 +270,7 @@ def insert_data():
             "sensor_size": "Full Frame",
             "video_resolution": "4K",
         },
-        image_url="https://example.com/nikon_z6_ii.jpg",
+        image_url="https://th.bing.com/th/id/OIP.T2AXQ74viu4ZA0JWn_LyuAHaGC?rs=1&pid=ImgDetMain",
     )
 
     Products.objects.create(
@@ -288,7 +288,7 @@ def insert_data():
             "battery_life": "20 hours",
             "connectivity_options": "Bluetooth 4.1",
         },
-        image_url="https://example.com/bose_qc35_ii.jpg",
+        image_url="https://th.bing.com/th/id/OIP.hsFJ-FY3zm2zdgejV5AmTAAAAA?rs=1&pid=ImgDetMain",
     )
 
     print("Inserted Products data...")
