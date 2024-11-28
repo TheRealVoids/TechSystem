@@ -273,6 +273,5 @@ pyrightconfig.json
 
 node_modules
 static/CACHE
-static/src/output.css
 
 .env.local
