@@ -8,6 +8,8 @@
 ## Overview
 TechSystem is a web-based platform designed to manage the rental of technology equipment. The system leverages both PostgreSQL and MongoDB to balance the needs for consistency, availability, and partition tolerance as outlined in the CAP theorem. This document explains the rationale behind the technology stack, how the CAP model is applied, and the architectural choices made for the solution.
 
+
+
 ## CAP Model in TechSystem
 
 ### PostgreSQL: Consistency and Availability
@@ -23,6 +25,8 @@ PostgreSQL was used to maintain the structured model provided in the initial sys
 The enhanced PostgreSQL schema provides:
 1. **Category Definitions**: Strongly defined categories with unique identifiers.
 2. **Extensible Attributes**: The flexibility to handle attribute variability without compromising schema integrity.
+
+
 
 ### MongoDB: Partition Tolerance and Schema Flexibility
 MongoDB, a NoSQL database, was introduced to handle dynamic and semi-structured data, specifically:
@@ -78,11 +82,13 @@ MongoDB was selected due to its quality attributes:
 - **Partition Tolerance**: MongoDB’s distributed architecture is robust against network partitioning.
 
 
+
 ## Framework Selection: Why Django?
 Django was chosen as the framework for TechSystem due to its:
 - **Rapid Development**: Built-in tools for authentication, ORM, and administrative interfaces.
 - **ORM Support**: Seamless integration with PostgreSQL through its default ORM and compatibility with MongoDB using `mongoengine`.
 - **Scalability**: Django’s modular design supports future growth of the application.
+
 
 
 ## Deployment Details
@@ -94,7 +100,40 @@ Django was chosen as the framework for TechSystem due to its:
   - Hosted locally or on MongoDB Atlas for flexibility.
   - Manages collections for products and rental requests.
 
+
+
+## Functional Requirements
+1. **Customer Login**:
+   - Customers must be able to log in using their credentials.
+2. **View Active Rentals**:
+   - Customers should view all currently rented equipment with details such as contract ID, start and end dates, and monthly rental cost.
+3. **Submit Rental Requests**:
+   - Customers should browse available products, filter by category, and submit rental requests.
+4. **Dynamic Attribute Display**:
+   - The system should dynamically display product attributes based on the category (e.g., processor for laptops, printing technology for printers).
+5. **Manage Contracts and Delivery Certificates**:
+   - Administrators must manage contracts and associated delivery certificates, including linking them to equipment.
+
+
+
+## Non-Functional Requirements
+1. **Scalability**:
+   - MongoDB’s schema-less nature ensures the system can handle new product categories without altering the structure.
+2. **Data Consistency**:
+   - PostgreSQL ensures ACID compliance for critical transactional data like contracts and delivery certificates.
+3. **Availability**:
+   - PostgreSQL hosted on Render provides reliable uptime and fast query responses.
+4. **Partition Tolerance**:
+   - MongoDB’s distributed model ensures data availability even in case of network issues.
+5. **Performance**:
+   - The system must handle concurrent users browsing products and submitting requests with minimal latency.
+6. **Security**:
+   - Customer data and login credentials must be securely stored and managed using industry best practices.
+7. **Usability**:
+   - The web interface must be intuitive and responsive across devices.
+
+
+
 ## Conclusion
 By combining PostgreSQL and MongoDB, TechSystem leverages the strengths of both relational and NoSQL databases. This hybrid approach balances the CAP theorem’s constraints effectively, providing a robust, flexible, and scalable solution for managing technology rentals. Django further simplifies development and deployment, ensuring the system is maintainable and extensible.
-
 
